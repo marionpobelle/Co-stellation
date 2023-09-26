@@ -23,7 +23,7 @@ public class CursorManager : MonoBehaviour
 
     [Header("Control settings")]
     [Tooltip("The speed at which the cursor moves when the player is holding the stick")]
-    [SerializeField] private float _freeMovementCursorSpeed = 1;
+    [SerializeField] private float _freeMovementCursorSpeed = 300;
     [Tooltip("The duration the player has to hold the stick in a direction to switch the cursor  movement style to free movement")]
     [SerializeField] private float _holdToMoveToFreeMovementDuration = 0.5f;
     [SerializeField] CursorMovementTypes _cursorMovementType = CursorMovementTypes.Snapping;
@@ -35,6 +35,8 @@ public class CursorManager : MonoBehaviour
     {
         InputManager.Instance.OnMove += OnMove;
         InputManager.Instance.OnHoldMove += OnHoldMove;
+
+        InputManager.Instance.HoldMoveDuration = _holdToMoveToFreeMovementDuration;
 
         SnapToStar(GetClosestStar(_cursor.transform));
         _previewCursor.enabled = false;
@@ -137,7 +139,7 @@ public class CursorManager : MonoBehaviour
         {
             return;
         }
-        _cursor.transform.position += (Vector3)(_currentInput * Time.deltaTime * 100);
+        _cursor.transform.position += (Vector3)(_currentInput * Time.deltaTime * _freeMovementCursorSpeed);
         SnapPreviewToStar(GetClosestStar(_cursor.transform));
     }
 }
