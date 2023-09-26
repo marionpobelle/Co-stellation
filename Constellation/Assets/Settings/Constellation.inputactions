@@ -6,13 +6,31 @@
             "id": "a2248a80-9619-4790-8a0d-1ffed3f61200",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "InMove",
                     "type": "Value",
                     "id": "331f96d9-3ada-4b8f-86df-8f095456c3cc",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "InConfirm",
+                    "type": "Button",
+                    "id": "18c95ed1-d60a-49a2-be11-71c84d3e441b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "InCancel",
+                    "type": "Button",
+                    "id": "7e3582d8-edf0-4232-960e-c8a9f22f85c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -23,7 +41,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -34,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -45,7 +63,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -56,7 +74,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -67,7 +85,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -78,7 +96,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -89,7 +107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -100,7 +118,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -111,7 +129,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -122,7 +140,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -133,7 +151,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Move",
+                    "action": "InMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -144,7 +162,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Move",
+                    "action": "InMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89e8c27f-3ea0-452d-b7c9-6aec6da5f721",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InConfirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0063353-5ab2-41f9-adab-319c989e316b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InCancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
