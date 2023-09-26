@@ -92,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 1662588930877671353, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 4655143513844602471, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_Name
       value: Star_Mesh
@@ -119,23 +119,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

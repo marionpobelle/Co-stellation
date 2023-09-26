@@ -45,7 +45,7 @@ public class Cursor : MonoBehaviour
         {
             var nextStar = FindNextStar(_currentStar, previousInput);
             SnapToStar(nextStar);
-        }
+        }   
     }
 
     private Star FindNextStar(Star startPoint, Vector2 direction)
@@ -54,7 +54,7 @@ public class Cursor : MonoBehaviour
         //float height = 1f;
         //var result = Physics2D.BoxCast((Vector2)startPoint.transform.position + ( height * direction), new Vector2(_boxCastWidth, height),angleToward, direction, Mathf.Infinity, _starsLayerMask);
 
-        var result = Physics2D.CircleCast((Vector2)startPoint.transform.position + (_boxCastWidth * direction*1.5f), _boxCastWidth, direction, Mathf.Infinity, _starsLayerMask);
+        var result = Physics2D.CircleCast((Vector2)startPoint.transform.position, _boxCastWidth, direction, Mathf.Infinity, _starsLayerMask);
 
         debugThing.transform.eulerAngles=new Vector3(0, 0, angleToward);
         //Debug.Log(result.transform.position);
@@ -102,5 +102,12 @@ public class Cursor : MonoBehaviour
         return closestStar;
     }
 
-
+    public void Update()
+    {
+        if (_cursorMovementType != CursorMovementTypes.FreeMovement)
+        {
+            return;
+        }
+        transform.position += (Vector3)(_currentInput * Time.deltaTime * 100);
+    }
 }
