@@ -21,7 +21,7 @@ public class StarGenerator : MonoBehaviour
 
     List<Star> stars = new List<Star>();
 
-    private void Start()
+    private void Awake()
     {
         if (spawnStarsOnStart)
             SpawnStars();

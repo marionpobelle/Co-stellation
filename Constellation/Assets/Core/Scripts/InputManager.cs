@@ -28,15 +28,22 @@ public class InputManager : MonoBehaviour
 
     [HideInInspector] public float HoldMoveDuration = 0.5f; //If movement != 0 for this duration or longer, then it's considered a hold. Set by the cursor's script.
 
+    private Coroutine CheckingHoldCoroutine=null;
+
     public void OnInMove(InputValue value)
     {
         Vector2 vector2 = value.Get<Vector2>();
         OnMove?.Invoke(vector2);
 
-        _movementIsZero = (vector2 != Vector2.zero);
+        _movementIsZero = (vector2 == Vector2.zero);
         if (!_holdingIsBeingChecked)
         {
-            StartCoroutine(CheckForMoveHolding(HoldMoveDuration));
+            if (CheckingHoldCoroutine != null)
+            {
+                StopCoroutine(CheckingHoldCoroutine);
+                CheckingHoldCoroutine = null;
+            }
+            CheckingHoldCoroutine=StartCoroutine(CheckForMoveHolding(HoldMoveDuration));
         }
     }
 
