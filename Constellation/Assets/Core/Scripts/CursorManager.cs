@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CursorManager : MonoBehaviour
@@ -44,6 +45,13 @@ public class CursorManager : MonoBehaviour
     [Header("Borders")]
     [SerializeField] private Borders _borders;
 
+    [Header("Callbacks")]
+    public UnityEvent<int> PlacedASegment = new UnityEvent<int>();
+    public UnityEvent PlacedAConstellation = new UnityEvent();
+    public UnityEvent CancelledASegment = new UnityEvent();
+    public UnityEvent CancelledAConstellation=new UnityEvent();
+
+
     private Star _startStar;
     private Star _endStar;
     private BuildingState _buildingState = BuildingState.ChoosingStartStar;
@@ -78,6 +86,7 @@ public class CursorManager : MonoBehaviour
                 _previewConstellation.HidePreviewSegment();
                 break;
         }
+        CancelledASegment?.Invoke();
     }
 
     private void OnCancelBuild()
@@ -85,6 +94,7 @@ public class CursorManager : MonoBehaviour
         _previewConstellation.ClearConstellation();
         _startStar = null;
         _endStar = null;
+        CancelledAConstellation?.Invoke();
         OnCancelStep();
     }
 
@@ -107,6 +117,7 @@ public class CursorManager : MonoBehaviour
                 _startStar = CurrentStar;
                 break;
         }
+        PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
     }
 
     private void OnSave()
@@ -115,6 +126,7 @@ public class CursorManager : MonoBehaviour
         _startStar = null;
         _endStar = null;
         _buildingState = BuildingState.ChoosingStartStar;
+        PlacedAConstellation?.Invoke();
     }
 
     private const float INPUT_THRESHOLD = 0.8f;
