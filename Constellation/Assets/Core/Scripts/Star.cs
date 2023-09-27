@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Star : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]List<GameObject>starGFX;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+        private void Start() {
+            Instantiate(starGFX[Random.Range(0, starGFX.Count)], transform);
+        }
 }

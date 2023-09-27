@@ -11,7 +11,7 @@ public class StarGenerator : MonoBehaviour
     [SerializeField] Star starPrefab;
     [MinMaxSlider(-100f, 100f), SerializeField] Vector2 minMaxXStarCoord;
     [MinMaxSlider(-100f, 100f), SerializeField] Vector2 minMaxYStarCoord;
-    [MinMaxSlider(0f, 2f), SerializeField] Vector2 minMaxScale;
+    [MinMaxSlider(0f, 50f), SerializeField] Vector2 minMaxScale;
     [SerializeField] float starsAmount = 100;
     [SerializeField] float minStarDistance = 1f;
     [SerializeField] int maxTries = 1000;
