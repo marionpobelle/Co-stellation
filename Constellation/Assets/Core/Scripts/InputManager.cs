@@ -22,34 +22,22 @@ public class InputManager : MonoBehaviour
     #endregion
 
     public Action<Vector2> OnMove;
-    public Action OnHoldMove;
+    public Action<Vector2> OnSnap;    
     public Action OnConfirm;
-    public Action OnCancel;
-
-    [HideInInspector] public float HoldMoveDuration = 0.5f; //If movement != 0 for this duration or longer, then it's considered a hold. Set by the cursor's script.
-
-    private Coroutine CheckingHoldCoroutine=null;
+    public Action OnSave;
+    public Action OnCancelStep;
+    public Action OnCancelBuild;
 
     public void OnInMove(InputValue value)
     {
         Vector2 vector2 = value.Get<Vector2>();
         OnMove?.Invoke(vector2);
-
-        _movementIsZero = (vector2 == Vector2.zero);
-        if (!_holdingIsBeingChecked)
-        {
-            if (CheckingHoldCoroutine != null)
-            {
-                StopCoroutine(CheckingHoldCoroutine);
-                CheckingHoldCoroutine = null;
-            }
-            CheckingHoldCoroutine=StartCoroutine(CheckForMoveHolding(HoldMoveDuration));
-        }
     }
 
-    public void OnInHoldMove()
+    public void OnInSnap(InputValue value)
     {
-        OnHoldMove?.Invoke();
+        Vector2 vector2 = value.Get<Vector2>();
+        OnSnap?.Invoke(vector2);
     }
 
     public void OnInConfirm()
@@ -57,22 +45,18 @@ public class InputManager : MonoBehaviour
         OnConfirm?.Invoke();
     }
 
-    public void OnInCancel()
+    public void OnInSave()
     {
-        OnCancel?.Invoke();
+        OnSave?.Invoke();
     }
 
-    private bool _movementIsZero;
-    private bool _holdingIsBeingChecked;
-    private IEnumerator CheckForMoveHolding(float duration)
+    public void OnInCancelStep()
     {
-        _holdingIsBeingChecked = true;
-        yield return new WaitForSecondsRealtime(duration);
-        if (!_movementIsZero)
-        {
-            OnInHoldMove();
-        }
-        _movementIsZero = true;
-        _holdingIsBeingChecked = false;
+        OnCancelStep?.Invoke();
+    }
+
+    public void OnInCancelBuild()
+    {
+        OnCancelBuild?.Invoke();
     }
 }

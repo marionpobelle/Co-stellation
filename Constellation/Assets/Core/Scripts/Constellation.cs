@@ -38,6 +38,8 @@ public class Constellation : MonoBehaviour
     private Segment _previewSegment;
 
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
+    private LineRenderer _previewLineRenderer;
+
     public GameObject StarsParent;
     public float SegmentLineWidth=0.6f;
     public float PreviewLineWidth = 0.3f;
@@ -48,13 +50,10 @@ public class Constellation : MonoBehaviour
     public Color SavedSegmentColor=Color.white;
     public float SavedSegmentLineWidth=0.5f;
 
-    public Segment PreviewSegment { 
-        get => _previewSegment; 
-        set
-        {
-            _previewSegment = value;
-            RefreshRender();
-        }
+    private void Start()
+    {
+        _previewLineRenderer = CreateLineRenderer(new Segment(null,null), null, PreviewSegmentColor, PreviewLineWidth);
+        HidePreviewSegment();
     }
 
     public void AddSegment(Star start, Star end)
@@ -69,6 +68,16 @@ public class Constellation : MonoBehaviour
         RefreshRender();
     }
 
+    //Returns the start point of the last segment
+    public Star RemoveLastSegment()
+    {
+        if (Segments.Count <= 0) return null;
+        Star startPointOfLastSegment = Segments.Last()._start;
+        Segments.RemoveAt(Segments.Count - 1);
+        RefreshRender();
+        return startPointOfLastSegment;
+    }
+
     private void RefreshRender()
     {
         foreach (var lineRenderer in _lineRenderers)
@@ -80,25 +89,45 @@ public class Constellation : MonoBehaviour
         {
             AddLineRenderer(segment,null,SegmentColor,SegmentLineWidth);
         }
-        if (PreviewSegment == null) return;
-        if(PreviewSegment._start == null || PreviewSegment._end == null) return;
+    }
 
-        AddLineRenderer(PreviewSegment, null, PreviewSegmentColor, PreviewLineWidth);
+    public void PreviewSegment(Vector3 start, Vector3 end)
+    {
+        _previewLineRenderer.enabled = true;
+        _previewLineRenderer.SetPosition(0, start);
+        _previewLineRenderer.SetPosition(1, end);
+    }
+
+    public void HidePreviewSegment()
+    {
+        _previewLineRenderer.enabled = false;
     }
 
     private void AddLineRenderer(Segment segment, Material material, Color color,float width)
+    {
+        var lineRenderer = CreateLineRenderer(segment,material,color,width);
+        _lineRenderers.Add(lineRenderer);
+    }
+
+    private LineRenderer CreateLineRenderer(Segment segment, Material material, Color color, float width)
     {
         var lineRenderer = new GameObject().AddComponent<LineRenderer>();
         lineRenderer.gameObject.name = "LineRenderer";
         lineRenderer.transform.SetParent(transform);
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, segment._start.transform.position);
-        lineRenderer.SetPosition(1, segment._end.transform.position);
+        
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material.color = color;
-        _lineRenderers.Add(lineRenderer);
+
+        if(segment._start!=null && segment._end!=null)
+        {
+            lineRenderer.SetPosition(0, segment._start.transform.position);
+            lineRenderer.SetPosition(1, segment._end.transform.position);
+        }
+
+        return lineRenderer;
     }
 
     public void SaveConstellation()
@@ -117,7 +146,7 @@ public class Constellation : MonoBehaviour
     public void ClearConstellation()
     {
         Segments.Clear();
-        PreviewSegment = null;
+        HidePreviewSegment();
         RefreshRender();
     }
 }
