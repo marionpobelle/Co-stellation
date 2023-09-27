@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75411e3994f1b2d43b3142af3bbabe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentStar: {fileID: 0}
+  CurrentStar: {fileID: 0}
   _previewCursor: {fileID: 490885988}
   _cursor: {fileID: 748041022}
   _previewConstellation: {fileID: 494008805}

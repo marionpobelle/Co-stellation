@@ -12,7 +12,8 @@ public class CursorManager : MonoBehaviour
 
     Vector2 _currentInput = Vector2.zero;
 
-    public Star _currentStar;
+    public Star CurrentStar;
+    private Star _previewStar;
 
     [Header("External objects")]
     [SerializeField] private Image _previewCursor;
@@ -55,10 +56,10 @@ public class CursorManager : MonoBehaviour
         {
             case BuildingState.ChoosingStartStar:      
                 _buildingState = BuildingState.ChoosingEndStar;
-                _startStar = _currentStar;
+                _startStar = CurrentStar;
                 break;
             case BuildingState.ChoosingEndStar:
-                if (_startStar == _currentStar)
+                if (_startStar == CurrentStar)
                 {
                     Debug.Log("Saving");
                     _previewConstellation.SaveConstellation();
@@ -66,9 +67,9 @@ public class CursorManager : MonoBehaviour
                     break;
                 }
                 _buildingState = BuildingState.ChoosingEndStar;                
-                _endStar = _currentStar;
+                _endStar = CurrentStar;
                 _previewConstellation.AddSegment(_startStar, _endStar);
-                _startStar = _currentStar;
+                _startStar = CurrentStar;
                 break;
         }
     }
@@ -78,21 +79,28 @@ public class CursorManager : MonoBehaviour
         _cursorMovementType = CursorMovementTypes.FreeMovement;
     }
 
+    private const float INPUT_THRESHOLD=0.8f;
     private void OnMove(Vector2 value)
     {
         var previousInput = _currentInput;
         _currentInput = value;
 
-        if(_currentInput!= previousInput && _currentInput!=Vector2.zero && _cursorMovementType == CursorMovementTypes.Snapping) 
+        if(_cursorMovementType== CursorMovementTypes.Snapping && _currentInput.sqrMagnitude < INPUT_THRESHOLD*INPUT_THRESHOLD)
         {
-            var previewStar = FindNextStar(_currentStar, _currentInput);
+            _currentInput = Vector2.zero;
+        }
+       
+
+        if (_currentInput!= previousInput && _currentInput!=Vector2.zero && _cursorMovementType == CursorMovementTypes.Snapping) 
+        {
+            var previewStar = FindNextStar(CurrentStar, _currentInput);
             SnapPreviewToStar(previewStar);
         }
 
         //Snap to the next star once the player has released the stick
         if (_currentInput == Vector2.zero && previousInput != Vector2.zero && _cursorMovementType == CursorMovementTypes.Snapping)
         {
-            var nextStar = FindNextStar(_currentStar, previousInput);
+            var nextStar = _previewStar;
             SnapToStar(nextStar);
         }   
 
@@ -127,7 +135,8 @@ public class CursorManager : MonoBehaviour
 
     public void SnapToStar(Star nextStar)
     {
-        _currentStar = nextStar;
+        if (nextStar == null) return;
+        CurrentStar = nextStar;
         _previewCursor.enabled = false;
 
         Vector3 position = nextStar.transform.position;
@@ -135,14 +144,15 @@ public class CursorManager : MonoBehaviour
         _cursor.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
 
         if (_buildingState != BuildingState.ChoosingEndStar) return;
-        if (_currentStar == _startStar) return;
-        _previewConstellation.PreviewSegment = new Segment(_startStar, _currentStar);
+        if (CurrentStar == _startStar) return;
+        _previewConstellation.PreviewSegment = new Segment(_startStar, CurrentStar);
     }
 
     public void SnapPreviewToStar(Star nextStar)
     {
         _previewCursor.enabled = true;
         _previewCursor.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, nextStar.transform.position);
+        _previewStar= nextStar;
     }
 
     public Star GetClosestStar(Transform cursor)
@@ -159,7 +169,7 @@ public class CursorManager : MonoBehaviour
         {
             var hit = Physics2D.CircleCast(worldPosition, i * radiusStep, Vector2.zero);
             if (hit == null) continue;
-            if (hit.collider == null) continue;
+            if (hit.collider == null) continue;            
             if (hit.collider.transform.GetComponent<Star>() == null) continue;
             closestStar = hit.transform.GetComponent<Star>();
             break;
