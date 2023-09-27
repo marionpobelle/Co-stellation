@@ -44,9 +44,13 @@ public class Constellation : MonoBehaviour
     public Color SegmentColor=Color.green;
     public Color PreviewSegmentColor=Color.gray;
 
+    public Material SegmentMaterial;
+
     [Header("Saved constellations attributes")]
     public Color SavedSegmentColor=Color.white;
     public float SavedSegmentLineWidth=0.5f;
+
+    public Material SavedSegmentMaterial;
 
     public Segment PreviewSegment { 
         get => _previewSegment; 
@@ -96,7 +100,8 @@ public class Constellation : MonoBehaviour
         lineRenderer.SetPosition(1, segment._end.transform.position);
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.material = SegmentMaterial;
         lineRenderer.material.color = color;
         _lineRenderers.Add(lineRenderer);
     }
@@ -109,6 +114,7 @@ public class Constellation : MonoBehaviour
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;
+        consCopy.SegmentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
         ClearConstellation();

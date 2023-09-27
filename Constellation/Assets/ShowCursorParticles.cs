@@ -12,14 +12,13 @@ public class ShowCursorParticles : MonoBehaviour
     [SerializeField]
     float distanceToCam = 0;
 
-    Vector3 newPos;
+    [SerializeField]
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
-        newPos = new Vector3();
-        FindObjectOfType<AudioManager>().Play("Cats");
     }
 
     // Update is called once per frame
@@ -31,5 +30,9 @@ public class ShowCursorParticles : MonoBehaviour
         transform.position = cam.ViewportToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam));
         //transform.position = new Vector3(normalizedCursorPosX, normalizedCursorPosY,0);
         Debug.Log($"x lerped val : {normalizedCursorPosX} | func val : {cam.ScreenToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam))}");
+
+        //If selected, animation
+        //anim.SetTrigger("Select");
+
     }
 }
