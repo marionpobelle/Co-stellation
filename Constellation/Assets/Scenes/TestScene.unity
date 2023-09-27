@@ -198,6 +198,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490885986}
   m_CullTransparentMesh: 1
+--- !u!1 &494008804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494008806}
+  - component: {fileID: 494008805}
+  m_Layer: 0
+  m_Name: PreviewConstellation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &494008805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494008804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32aea75a64a2d8458fdf9d1046fa73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StarsParent: {fileID: 1208675538}
+  SegmentLineWidth: 0.6
+  PreviewLineWidth: 0.3
+  SegmentColor: {r: 0.18831526, g: 0.8962264, b: 0.097232126, a: 1}
+  PreviewSegmentColor: {r: 0.27144888, g: 0.9433962, b: 0.4178148, a: 0.68235296}
+  SavedSegmentColor: {r: 0, g: 1, b: 0.82268715, a: 1}
+  SavedSegmentLineWidth: 0.5
+--- !u!4 &494008806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494008804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 528.5, y: 259.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &748041020
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +1020,7 @@ MonoBehaviour:
   _currentStar: {fileID: 0}
   _previewCursor: {fileID: 490885988}
   _cursor: {fileID: 748041022}
+  _previewConstellation: {fileID: 494008805}
   _boxCastWidth: 5
   _starsLayerMask:
     serializedVersion: 2
@@ -1129,3 +1181,4 @@ SceneRoots:
   - {fileID: 2110188842}
   - {fileID: 1053788014}
   - {fileID: 1208675539}
+  - {fileID: 494008806}

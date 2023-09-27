@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CursorManager : MonoBehaviour
 {
     public enum CursorMovementTypes { Snapping, FreeMovement }
+    public enum BuildingState { ChoosingStartStar, ChoosingEndStar }
     
 
     Vector2 _currentInput = Vector2.zero;
@@ -16,6 +17,7 @@ public class CursorManager : MonoBehaviour
     [Header("External objects")]
     [SerializeField] private Image _previewCursor;
     [SerializeField] private Image _cursor;
+    [SerializeField] private Constellation _previewConstellation;
 
     [Header("Technical settings aobut the raycasting")]
     [SerializeField] private float _boxCastWidth = 10;
@@ -27,19 +29,48 @@ public class CursorManager : MonoBehaviour
     [Tooltip("The duration the player has to hold the stick in a direction to switch the cursor  movement style to free movement")]
     [SerializeField] private float _holdToMoveToFreeMovementDuration = 0.5f;
     [SerializeField] CursorMovementTypes _cursorMovementType = CursorMovementTypes.Snapping;
-
+ 
     [Header("Debug objects")]
     [SerializeField] private Transform debugThing;
+
+    private Star _startStar;
+    private Star _endStar;
+    private BuildingState _buildingState = BuildingState.ChoosingStartStar;
 
     private void Start()
     {
         InputManager.Instance.OnMove += OnMove;
         InputManager.Instance.OnHoldMove += OnHoldMove;
+        InputManager.Instance.OnConfirm += OnConfirm;
 
         InputManager.Instance.HoldMoveDuration = _holdToMoveToFreeMovementDuration;
 
         SnapToStar(GetClosestStar(_cursor.transform));
         _previewCursor.enabled = false;
+    }
+
+    private void OnConfirm()
+    {
+        switch(_buildingState)
+        {
+            case BuildingState.ChoosingStartStar:      
+                _buildingState = BuildingState.ChoosingEndStar;
+                _startStar = _currentStar;
+                break;
+            case BuildingState.ChoosingEndStar:
+                if (_startStar == _currentStar)
+                {
+                    Debug.Log("Saving");
+                    _previewConstellation.SaveConstellation();
+                    _buildingState = BuildingState.ChoosingStartStar;
+                    break;
+                }
+                _buildingState = BuildingState.ChoosingEndStar;                
+                _endStar = _currentStar;
+                _previewConstellation.AddSegment(_startStar, _endStar);
+                _startStar = _currentStar;
+                break;
+        }
     }
 
     private void OnHoldMove()
@@ -102,6 +133,10 @@ public class CursorManager : MonoBehaviour
         Vector3 position = nextStar.transform.position;
 
         _cursor.transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
+
+        if (_buildingState != BuildingState.ChoosingEndStar) return;
+        if (_currentStar == _startStar) return;
+        _previewConstellation.PreviewSegment = new Segment(_startStar, _currentStar);
     }
 
     public void SnapPreviewToStar(Star nextStar)
