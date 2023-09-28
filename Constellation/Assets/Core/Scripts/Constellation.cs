@@ -215,6 +215,7 @@ public class Constellation : MonoBehaviour
     {
         _previewLineRenderer.enabled = false;
         DOTween.Kill(_previewLineRenderer);
+        _previewSegmentInErrorMode=false;
         _previewLineRenderer.material.color = PreviewSegmentColor;
     }
 
@@ -249,6 +250,7 @@ public class Constellation : MonoBehaviour
 
     public bool SaveConstellation()
     {
+        HidePreviewSegment();
         if (Segments.Count <= 0) return false;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
