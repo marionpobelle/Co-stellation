@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CursorManager : MonoBehaviour
 {
@@ -67,6 +68,8 @@ public class CursorManager : MonoBehaviour
         InputManager.Instance.OnCancelStep += OnCancelStep;
         InputManager.Instance.OnCancelBuild += OnCancelBuild;
 
+cursorDefaultScale = _cursor.transform.localScale;
+
         SnapToStar(GetClosestStar(_cursor.transform));
         _previewCursor.enabled = false;
     }
@@ -101,6 +104,11 @@ public class CursorManager : MonoBehaviour
         OnCancelStep();
     }
 
+[SerializeField] float cursorFeedbackDuration;
+Vector3 cursorDefaultScale;
+Coroutine cursorFeedbackRoutine;
+[SerializeField] AnimationCurve cursorFeedbackCurve;
+
     private void OnConfirm()
     {
         switch (_buildingState)
@@ -115,7 +123,7 @@ public class CursorManager : MonoBehaviour
                 break;
             case BuildingState.ChoosingEndStar:
                 if (_startStar == CurrentStar)
-                {
+                { 
                     break;
                 }
 
@@ -140,10 +148,35 @@ public class CursorManager : MonoBehaviour
                 }
 
                 PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
+                //feedback animation cursor tweening
+if(cursorFeedbackRoutine != null){
+    StopCoroutine(cursorFeedbackRoutine);
+    cursorFeedbackRoutine = null;
+    _cursor.transform.localScale = cursorDefaultScale;
+}
+StartCoroutine(CursorFeedbackRoutine());
                 break;
         }
         
     }
+
+IEnumerator CursorFeedbackRoutine()
+{
+float startTime = Time.time;
+float endTime = Time.time + cursorFeedbackDuration;
+Debug.Log("starting coroutine");
+while(Time.time < endTime)
+{
+    yield return null;
+    
+    float normalizedValue = Mathf.InverseLerp(startTime, endTime, Time.time);
+
+    float scaleMultiplier = cursorFeedbackCurve.Evaluate(normalizedValue);
+Debug.Log(normalizedValue);
+    _cursor.transform.localScale = cursorDefaultScale * scaleMultiplier;
+}
+_cursor.transform.localScale = cursorDefaultScale;
+}
 
     private void OnSave()
     {
