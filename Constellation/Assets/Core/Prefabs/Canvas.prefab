@@ -211,6 +211,16 @@ MonoBehaviour:
   CancelledAConstellation:
     m_PersistentCalls:
       m_Calls: []
+  Snapped:
+    m_PersistentCalls:
+      m_Calls: []
+  cursorFeedbackDuration: 0
+  cursorFeedbackCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5668066444949941665
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +403,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6137201474001733592}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3d3836f19571db1468e95a8847e1a735, type: 2}
   m_CullingMode: 0
