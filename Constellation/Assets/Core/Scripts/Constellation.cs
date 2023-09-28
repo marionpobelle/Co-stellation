@@ -151,6 +151,7 @@ public class Constellation : MonoBehaviour
         if (Segments.Count <= 0) return null;
         Star startPointOfLastSegment = Segments.Last()._start;
         Segments.RemoveAt(Segments.Count - 1);
+        var lastLineRenderer = _lineRenderers.Last();
         _lineRenderers.Remove(lastLineRenderer);
         TweenLineRenderer(lastLineRenderer, true, true);
         RefreshRender();
