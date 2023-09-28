@@ -53,6 +53,9 @@ public class Constellation : MonoBehaviour
 
     public Material CurrentSegmentMaterial;
 
+    [Tooltip("Distance between the star and the start of the segment, except if the stars are too close")]
+    public float DistanceBetweenSegmentAndStar = 0.5f;
+
     [Header("Limitations")]
     public int MaxSegments = 16;
     public float MaxDistance = 50;
@@ -104,7 +107,7 @@ public class Constellation : MonoBehaviour
 
         HidePreviewSegment();
         Segments.Add(segment);
-        RefreshRender();
+        AddLineRenderer(segment, CurrentSegmentMaterial, SegmentColor, SegmentLineWidth);
         TweenLineRenderer(_lineRenderers.Last());
 
         return true;
@@ -152,9 +155,10 @@ public class Constellation : MonoBehaviour
         Star startPointOfLastSegment = Segments.Last()._start;
         Segments.RemoveAt(Segments.Count - 1);
         var lastLineRenderer = _lineRenderers.Last();
+
         _lineRenderers.Remove(lastLineRenderer);
         TweenLineRenderer(lastLineRenderer, true, true);
-        RefreshRender();
+
         return startPointOfLastSegment;
     }
 
@@ -251,8 +255,14 @@ public class Constellation : MonoBehaviour
 
         if (segment._start != null && segment._end != null)
         {
-            lineRenderer.SetPosition(0, segment._start.transform.position);
-            lineRenderer.SetPosition(1, segment._end.transform.position);
+            var direction = segment._end.transform.position - segment._start.transform.position;
+            var length = direction.magnitude;
+            direction=direction.normalized;
+
+            float offsetLength=(length>3*DistanceBetweenSegmentAndStar) ? DistanceBetweenSegmentAndStar : 0.33f*length;
+
+            lineRenderer.SetPosition(0, segment._start.transform.position+offsetLength*direction);
+            lineRenderer.SetPosition(1, segment._end.transform.position-offsetLength*direction);
         }
 
         return lineRenderer;
@@ -268,6 +278,7 @@ public class Constellation : MonoBehaviour
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;
+        consCopy.DistanceBetweenSegmentAndStar = DistanceBetweenSegmentAndStar;
         consCopy.CurrentSegmentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
