@@ -35,6 +35,7 @@ public class CursorManager : MonoBehaviour
     [Tooltip("The speed at which the cursor moves when the player is holding the stick")]
     [SerializeField] private float _freeMovementCursorSpeed = 300;
 
+    
     [Serializable]
     internal struct Borders
     {

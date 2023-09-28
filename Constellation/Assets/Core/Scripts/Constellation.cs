@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,17 @@ public class Constellation : MonoBehaviour
     public Color PreviewSegmentColor=Color.gray;
 
     public Material SegmentMaterial;
+
+    [Header("Limitations")]
+    public int MaxStars = 16;
+    public float MaxDistance = 50;
+
+    private bool _previewSegmentInErrorMode = false;
+
+    [Header("Error segments attributes")]
+    [SerializeField] private Color _errorSegmentColor=Color.red;
+    [Tooltip("When you try to confirm  a wrong segment it will flash from normal color to this one, then back to normal color, following this (supposedly) bell curve")]
+    [SerializeField] private AnimationCurve _errorAnimationCurve;
 
     [Header("Saved constellations attributes")]
     public Color SavedSegmentColor=Color.white;
@@ -99,6 +111,20 @@ public class Constellation : MonoBehaviour
         _previewLineRenderer.enabled = true;
         _previewLineRenderer.SetPosition(0, start);
         _previewLineRenderer.SetPosition(1, end);
+
+        if((end-start).sqrMagnitude>MaxDistance*MaxDistance && !_previewSegmentInErrorMode)
+        {
+            _previewSegmentInErrorMode = true;
+            DOTween.Kill(_previewLineRenderer);
+            _previewLineRenderer.DOColor(new Color2(PreviewSegmentColor, PreviewSegmentColor), new Color2(_errorSegmentColor, _errorSegmentColor), 0.2f);
+            return;
+        }
+
+        if (!_previewSegmentInErrorMode) return;
+
+        _previewSegmentInErrorMode = false;
+        DOTween.Kill(_previewLineRenderer);
+        _previewLineRenderer.DOColor(new Color2(_errorSegmentColor, PreviewSegmentColor), new Color2(_errorSegmentColor, PreviewSegmentColor), 0.2f);
     }
 
     public void HidePreviewSegment()

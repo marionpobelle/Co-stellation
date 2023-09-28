@@ -263,6 +263,42 @@ MonoBehaviour:
   SegmentColor: {r: 0.18831526, g: 0.8962264, b: 0.097232126, a: 1}
   PreviewSegmentColor: {r: 0.27144888, g: 0.9433962, b: 0.4178148, a: 0.68235296}
   SegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
+  MaxStars: 16
+  MaxDistance: 1
+  _errorSegmentColor: {r: 1, g: 0, b: 0, a: 1}
+  _errorAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 0.9973906
+      inSlope: -0.014907904
+      outSlope: -0.014907904
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.35901222
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.9811319
+      outSlope: -1.9811319
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.058333337
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   SavedSegmentColor: {r: 0, g: 1, b: 0.82268715, a: 1}
   SavedSegmentLineWidth: 0.5
   SavedSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
