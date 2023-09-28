@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Segment
 {
@@ -42,49 +43,85 @@ public class Constellation : MonoBehaviour
     private LineRenderer _previewLineRenderer;
 
     public GameObject StarsParent;
-    public float SegmentLineWidth=0.6f;
+    public float SegmentLineWidth = 0.6f;
     public float PreviewLineWidth = 0.3f;
-    public Color SegmentColor=Color.blue;
-    public Color PreviewSegmentColor=Color.gray;
+    public Color SegmentColor = Color.blue;
+    public Color PreviewSegmentColor = Color.gray;
 
     public Material PreviewSegmentMaterial;
 
     public Material CurrentSegmentMaterial;
 
     [Header("Limitations")]
-    public int MaxStars = 16;
+    public int MaxSegments = 16;
     public float MaxDistance = 50;
 
     private bool _previewSegmentInErrorMode = false;
 
     [Header("Error segments attributes")]
-    [SerializeField] private Color _errorSegmentColor=Color.red;
+    [SerializeField] private Color _errorSegmentColor = Color.red;
     [Tooltip("When you try to confirm  a wrong segment it will flash from normal color to this one, then back to normal color, following this (supposedly) bell curve")]
     [SerializeField] private AnimationCurve _errorAnimationCurve;
+    [SerializeField] private float _errorAnimationDuration = 0.5f;
 
     [Header("Saved constellations attributes")]
-    public Color SavedSegmentColor=Color.white;
-    public float SavedSegmentLineWidth=0.5f;
+    public Color SavedSegmentColor = Color.white;
+    public float SavedSegmentLineWidth = 0.5f;
     public Material SavedSegmentMaterial;
+
+    [Header("Callbacks")]
+    public UnityEvent ErrorOnSegment = new UnityEvent();
 
     private void Start()
     {
-        _previewLineRenderer = CreateLineRenderer(new Segment(null,null), PreviewSegmentMaterial, PreviewSegmentColor, PreviewLineWidth);
+        _previewLineRenderer = CreateLineRenderer(new Segment(null, null), PreviewSegmentMaterial, PreviewSegmentColor, PreviewLineWidth);
         HidePreviewSegment();
     }
 
-    public void AddSegment(Star start, Star end)
+    public bool AddSegment(Star start, Star end)
     {
-        AddSegment(new Segment(start, end));
+
+        return AddSegment(new Segment(start, end));
     }
 
-    public void AddSegment(Segment segment)
+    public bool AddSegment(Segment segment)
     {
-        if( Segments.Find(x=>x.Equals(segment))!=null ) return;
+        if (Segments.Find(x => x.Equals(segment)) != null) return false;
+
+        bool tooLong = (segment._end.transform.position - segment._start.transform.position).sqrMagnitude > MaxDistance * MaxDistance;
+        if (tooLong)
+        {
+            ErrorOnSegment?.Invoke();
+            return false;
+        }
+
         HidePreviewSegment();
         Segments.Add(segment);
         RefreshRender();
         TweenLineRenderer(_lineRenderers.Last());
+
+        return true;
+    }
+
+    public bool HasTooManySegments(bool playAnimIfTooMany = false)
+    {
+        if (Segments.Count < MaxSegments) return false;
+
+        if (!playAnimIfTooMany) return true;
+
+        foreach (var lineRenderer in _lineRenderers)
+        {
+            DOTween.Kill(lineRenderer.material);
+            lineRenderer.material.color = SegmentColor;
+            lineRenderer.material.DOColor(_errorSegmentColor, _errorAnimationDuration).SetEase(_errorAnimationCurve).OnComplete(
+                () =>
+                {
+                    lineRenderer.material.color = SegmentColor;
+                }
+                );
+        }
+
+        return true;
     }
 
     //Returns the start point of the last segment
@@ -106,19 +143,24 @@ public class Constellation : MonoBehaviour
         _lineRenderers.Clear();
         foreach (var segment in Segments)
         {
-            AddLineRenderer(segment,CurrentSegmentMaterial,SegmentColor,SegmentLineWidth);
+            AddLineRenderer(segment, CurrentSegmentMaterial, SegmentColor, SegmentLineWidth);
         }
     }
 
     private void TweenLineRenderer(LineRenderer lineRenderer)
     {
+        //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
+        //We calculate the final length of the segment
         float length = (lineRenderer.GetPosition(0) - lineRenderer.GetPosition(1)).magnitude;
-        Vector3 direction=(lineRenderer.GetPosition(1)-lineRenderer.GetPosition(0)).normalized;
+        //The direction from line start to line end
+        Vector3 direction = (lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0)).normalized;
+
+        //Tween between 0 and full length, at each frame, the x will be somewhere between 0 and full length, and we'll get the point in between
         DOTween.To(
             x =>
             {
-                lineRenderer.SetPosition(1,startPosition + direction * x);
+                lineRenderer.SetPosition(1, startPosition + direction * x);
             },
             0,
             length,
@@ -132,7 +174,9 @@ public class Constellation : MonoBehaviour
         _previewLineRenderer.SetPosition(0, start);
         _previewLineRenderer.SetPosition(1, end);
 
-        if((end-start).sqrMagnitude>MaxDistance*MaxDistance && !_previewSegmentInErrorMode)
+        bool tooLong = (end - start).sqrMagnitude > MaxDistance * MaxDistance;
+
+        if (tooLong && !_previewSegmentInErrorMode)
         {
             _previewSegmentInErrorMode = true;
             DOTween.Kill(_previewLineRenderer.material);
@@ -140,7 +184,7 @@ public class Constellation : MonoBehaviour
             return;
         }
 
-        if (!_previewSegmentInErrorMode) return;
+        if (tooLong || !_previewSegmentInErrorMode) return;
 
         _previewSegmentInErrorMode = false;
         DOTween.Kill(_previewLineRenderer);
@@ -151,12 +195,12 @@ public class Constellation : MonoBehaviour
     {
         _previewLineRenderer.enabled = false;
         DOTween.Kill(_previewLineRenderer);
-        _previewLineRenderer.material.color=PreviewSegmentColor;
+        _previewLineRenderer.material.color = PreviewSegmentColor;
     }
 
-    private void AddLineRenderer(Segment segment, Material material, Color color,float width)
+    private void AddLineRenderer(Segment segment, Material material, Color color, float width)
     {
-        var lineRenderer = CreateLineRenderer(segment,material,color,width);
+        var lineRenderer = CreateLineRenderer(segment, material, color, width);
         _lineRenderers.Add(lineRenderer);
     }
 
@@ -166,14 +210,14 @@ public class Constellation : MonoBehaviour
         lineRenderer.gameObject.name = "LineRenderer";
         lineRenderer.transform.SetParent(transform);
         lineRenderer.positionCount = 2;
-        
+
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
         //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material = material;
         lineRenderer.material.color = color;
 
-        if(segment._start!=null && segment._end!=null)
+        if (segment._start != null && segment._end != null)
         {
             lineRenderer.SetPosition(0, segment._start.transform.position);
             lineRenderer.SetPosition(1, segment._end.transform.position);
@@ -184,7 +228,7 @@ public class Constellation : MonoBehaviour
 
     public void SaveConstellation()
     {
-        if(Segments.Count<=0) return;
+        if (Segments.Count <= 0) return;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
         consCopy.Segments = Segments;

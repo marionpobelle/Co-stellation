@@ -56,7 +56,7 @@ public class CursorManager : MonoBehaviour
 
     private Star _startStar;
     private Star _endStar;
-    private BuildingState _buildingState = BuildingState.ChoosingStartStar;
+    public BuildingState _buildingState = BuildingState.ChoosingStartStar;
 
     private void Start()
     {
@@ -105,6 +105,9 @@ public class CursorManager : MonoBehaviour
         switch (_buildingState)
         {
             case BuildingState.ChoosingStartStar:
+
+                if(_previewConstellation.HasTooManySegments(true)) break;
+
                 _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
                 break;
@@ -113,10 +116,21 @@ public class CursorManager : MonoBehaviour
                 {
                     break;
                 }
-                _buildingState = BuildingState.ChoosingEndStar;
+                
                 _endStar = CurrentStar;
-                _previewConstellation.AddSegment(_startStar, _endStar);
+
+                if(!_previewConstellation.AddSegment(_startStar, _endStar)) return;
+
+                _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
+
+                if(_previewConstellation.HasTooManySegments())
+                {
+                    _previewConstellation.HidePreviewSegment();
+                    _startStar = null;
+                    _buildingState = BuildingState.ChoosingStartStar;
+                }
+
                 break;
         }
         PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
