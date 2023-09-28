@@ -12,6 +12,7 @@ public class CursorManager : MonoBehaviour
 {
     public enum BuildingState { ChoosingStartStar, ChoosingEndStar }
 
+    public static CursorManager Instance;
 
     Vector2 _currentSnapInput = Vector2.zero;
     Vector2 _currentMoveInput = Vector2.zero;
@@ -60,6 +61,9 @@ public class CursorManager : MonoBehaviour
 
     private void Start()
     {
+        if (Instance == null)
+            Instance = this;
+
         InputManager.Instance.OnMove += OnMove;
         InputManager.Instance.OnSnap += OnSnap;
         InputManager.Instance.OnConfirm += OnConfirm;
@@ -227,6 +231,7 @@ public class CursorManager : MonoBehaviour
         else
         {
             DOTween.Kill(_cursor.transform);
+            CurrentStar = null;
         }
     }
 

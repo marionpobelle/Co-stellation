@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
 public class Segment
 {
     public Star _start;
@@ -72,14 +73,42 @@ public class Constellation : MonoBehaviour
     public Color SavedSegmentColor = Color.white;
     public float SavedSegmentLineWidth = 0.5f;
     public Material SavedSegmentMaterial;
+    public float minDefaultAlpha = .1f;
+    public float maxDefaultAlpha = .3f;
+    public float minSelectedAlpha = .5f;
+    public float maxSelectedAlpha = .8f;
+    public float fadingSpeed = .5f;
+    float random;
 
     [Header("Callbacks")]
     public UnityEvent ErrorOnSegment = new UnityEvent();
+
 
     private void Start()
     {
         _previewLineRenderer = CreateLineRenderer(new Segment(null, null), PreviewSegmentMaterial, PreviewSegmentColor, PreviewLineWidth);
         HidePreviewSegment();
+        random = UnityEngine.Random.Range(0f, 100f);
+
+        
+    }
+
+    private void Update()
+    {
+        if (StarIsInConstellation(CursorManager.Instance.CurrentStar))
+        {
+            foreach (var item in _lineRenderers)
+            {
+                item.material.SetFloat("_Alpha", Mathf.Lerp(minSelectedAlpha, maxSelectedAlpha, Mathf.InverseLerp(-1, 1, MathF.Cos(Time.time * fadingSpeed + random))));
+            }
+        }
+        else
+        {
+            foreach (var item in _lineRenderers)
+            {
+                item.material.SetFloat("_Alpha", Mathf.Lerp(minDefaultAlpha, maxDefaultAlpha, Mathf.InverseLerp(-1, 1, MathF.Cos(Time.time * fadingSpeed + random))));
+            }
+        }
     }
 
     public bool AddSegment(Star start, Star end)
@@ -93,7 +122,7 @@ public class Constellation : MonoBehaviour
         //We return true because this segment is valid, it's just that it already exists
         if (Segments.Find(x => x.Equals(segment)) != null) return true;
 
-        if(segment._end== null || segment._start == null)
+        if (segment._end == null || segment._start == null)
         {
             return false;
         }
@@ -140,7 +169,7 @@ public class Constellation : MonoBehaviour
         ErrorOnSegment?.Invoke();
     }
 
-    public bool StarIsInConstellation(Star starToFind,bool playAnimIfIsntIn = false)
+    public bool StarIsInConstellation(Star starToFind, bool playAnimIfIsntIn = false)
     {
         bool isIn = Segments.Find(x => x._start == starToFind || x._end == starToFind) != null;
         if (!isIn && playAnimIfIsntIn)
@@ -175,7 +204,7 @@ public class Constellation : MonoBehaviour
         }
     }
 
-    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut=false, bool deleteAtEnd=false)
+    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut = false, bool deleteAtEnd = false)
     {
         //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
@@ -194,7 +223,7 @@ public class Constellation : MonoBehaviour
             (tweeningOut) ? 0 : length,
             0.25f
             ).OnComplete(
-            () => 
+            () =>
             {
                 if (!deleteAtEnd) return;
                 Destroy(lineRenderer);
@@ -229,7 +258,7 @@ public class Constellation : MonoBehaviour
     {
         _previewLineRenderer.enabled = false;
         DOTween.Kill(_previewLineRenderer);
-        _previewSegmentInErrorMode=false;
+        _previewSegmentInErrorMode = false;
         _previewLineRenderer.material.color = PreviewSegmentColor;
     }
 
@@ -257,12 +286,12 @@ public class Constellation : MonoBehaviour
         {
             var direction = segment._end.transform.position - segment._start.transform.position;
             var length = direction.magnitude;
-            direction=direction.normalized;
+            direction = direction.normalized;
 
-            float offsetLength=(length>3*DistanceBetweenSegmentAndStar) ? DistanceBetweenSegmentAndStar : 0.33f*length;
+            float offsetLength = (length > 3 * DistanceBetweenSegmentAndStar) ? DistanceBetweenSegmentAndStar : 0.33f * length;
 
-            lineRenderer.SetPosition(0, segment._start.transform.position+offsetLength*direction);
-            lineRenderer.SetPosition(1, segment._end.transform.position-offsetLength*direction);
+            lineRenderer.SetPosition(0, segment._start.transform.position + offsetLength * direction);
+            lineRenderer.SetPosition(1, segment._end.transform.position - offsetLength * direction);
         }
 
         return lineRenderer;
@@ -274,7 +303,7 @@ public class Constellation : MonoBehaviour
         if (Segments.Count <= 0) return false;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
-        consCopy.Segments = Segments;
+        consCopy.Segments = new List<Segment>(Segments);
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;

@@ -329,6 +329,9 @@ MonoBehaviour:
   SavedSegmentColor: {r: 1, g: 1, b: 1, a: 1}
   SavedSegmentLineWidth: 0.5
   SavedSegmentMaterial: {fileID: 2100000, guid: 9405fc20197aaa04b831fe72a0d125f7, type: 2}
+  minDefaultAlpha: 0.01
+  maxDefaultAlpha: 0.08
+  fadingSpeed: 0.5
   ErrorOnSegment:
     m_PersistentCalls:
       m_Calls:
