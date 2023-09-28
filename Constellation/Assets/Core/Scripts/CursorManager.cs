@@ -131,9 +131,10 @@ public class CursorManager : MonoBehaviour
                     _buildingState = BuildingState.ChoosingStartStar;
                 }
 
+                PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
                 break;
         }
-        PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
+        
     }
 
     private void OnSave()
