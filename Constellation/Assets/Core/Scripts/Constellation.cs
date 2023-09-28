@@ -236,6 +236,7 @@ public class Constellation : MonoBehaviour
         //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material = material;
         lineRenderer.material.color = color;
+        lineRenderer.textureMode = LineTextureMode.Tile;
 
         if (segment._start != null && segment._end != null)
         {
@@ -246,9 +247,9 @@ public class Constellation : MonoBehaviour
         return lineRenderer;
     }
 
-    public void SaveConstellation()
+    public bool SaveConstellation()
     {
-        if (Segments.Count <= 0) return;
+        if (Segments.Count <= 0) return false;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
         consCopy.Segments = Segments;
@@ -259,6 +260,7 @@ public class Constellation : MonoBehaviour
 
         consCopy.RefreshRender();
         ClearConstellation();
+        return true;
     }
 
     public void ClearConstellation()

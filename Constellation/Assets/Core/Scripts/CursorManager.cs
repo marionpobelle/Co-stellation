@@ -180,6 +180,7 @@ _cursor.transform.localScale = cursorDefaultScale;
 
     private void OnSave()
     {
+        if (_startStar == null && _endStar == null) return;
         _previewConstellation.SaveConstellation();
         _startStar = null;
         _endStar = null;
