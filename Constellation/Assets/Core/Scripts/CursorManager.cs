@@ -97,6 +97,7 @@ public class CursorManager : MonoBehaviour
         _startStar = null;
         _endStar = null;
         CancelledAConstellation?.Invoke();
+        _buildingState = BuildingState.ChoosingStartStar;
         OnCancelStep();
     }
 
@@ -105,8 +106,9 @@ public class CursorManager : MonoBehaviour
         switch (_buildingState)
         {
             case BuildingState.ChoosingStartStar:
-
                 if(_previewConstellation.HasTooManySegments(true)) break;
+                //If we're currently building a constellation, the start star must be in the constellation
+                if(_previewConstellation.Segments.Count>0 && !_previewConstellation.StarIsInConstellation(CurrentStar,true)) break;
 
                 _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
@@ -116,7 +118,13 @@ public class CursorManager : MonoBehaviour
                 {
                     break;
                 }
-                
+
+                if (_startStar == null)
+                {
+                    _buildingState = BuildingState.ChoosingStartStar;
+                    break;
+                }
+
                 _endStar = CurrentStar;
 
                 if(!_previewConstellation.AddSegment(_startStar, _endStar)) return;

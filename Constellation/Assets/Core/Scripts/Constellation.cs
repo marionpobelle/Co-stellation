@@ -86,7 +86,13 @@ public class Constellation : MonoBehaviour
 
     public bool AddSegment(Segment segment)
     {
-        if (Segments.Find(x => x.Equals(segment)) != null) return false;
+        //We return true because this segment is valid, it's just that it already exists
+        if (Segments.Find(x => x.Equals(segment)) != null) return true;
+
+        if(segment._end== null || segment._start == null)
+        {
+            return false;
+        }
 
         bool tooLong = (segment._end.transform.position - segment._start.transform.position).sqrMagnitude > MaxDistance * MaxDistance;
         if (tooLong)
@@ -109,6 +115,13 @@ public class Constellation : MonoBehaviour
 
         if (!playAnimIfTooMany) return true;
 
+        PlayErrorFlashAnimation();
+
+        return true;
+    }
+
+    public void PlayErrorFlashAnimation()
+    {
         foreach (var lineRenderer in _lineRenderers)
         {
             DOTween.Kill(lineRenderer.material);
@@ -120,8 +133,15 @@ public class Constellation : MonoBehaviour
                 }
                 );
         }
+        ErrorOnSegment?.Invoke();
+    }
 
-        return true;
+    public bool StarIsInConstellation(Star starToFind,bool playAnimIfIsntIn = false)
+    {
+        bool isIn = Segments.Find(x => x._start == starToFind || x._end == starToFind) != null;
+        if (!isIn && playAnimIfIsntIn)
+            PlayErrorFlashAnimation();
+        return isIn;
     }
 
     //Returns the start point of the last segment
