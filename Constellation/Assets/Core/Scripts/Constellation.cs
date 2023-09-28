@@ -184,7 +184,7 @@ public class Constellation : MonoBehaviour
             },
             0,
             length,
-            0.5f
+            0.25f
             );
     }
 
