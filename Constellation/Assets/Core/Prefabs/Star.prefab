@@ -46,6 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129ef50e406cb4f428362798661e8ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starGFX:
+  - {fileID: 473449168137502399, guid: 7be7fae6f9581ae4597690822d1cd72a, type: 3}
+  - {fileID: 4239763769846761612, guid: 66b9b1ac5a78a4642972e91a0c770c19, type: 3}
+  - {fileID: 1280669823684007953, guid: 02e7a7e6e071d5b4da09eee5dc7cbc99, type: 3}
+  - {fileID: 3751320886521934392, guid: 651e49f018adbae4a9fd0ba5bfec5abd, type: 3}
 --- !u!58 &6535941063261970199
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -96,6 +101,10 @@ PrefabInstance:
     - target: {fileID: 4655143513844602471, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_Name
       value: Star_Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 4655143513844602471, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8265608831874736013, guid: 99acfd33622912747a494fc253b6b14e, type: 3}
       propertyPath: m_LocalPosition.x
