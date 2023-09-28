@@ -44,10 +44,14 @@ public class Constellation : MonoBehaviour
     public GameObject StarsParent;
     public float SegmentLineWidth=0.6f;
     public float PreviewLineWidth = 0.3f;
-    public Color SegmentColor=Color.green;
+    public Color SegmentColor=Color.blue;
     public Color PreviewSegmentColor=Color.gray;
 
-    public Material SegmentMaterial;
+    Material currentMaterial;
+
+    public Material PreviewSegmentMaterial;
+
+    public Material CurrentSegmentMaterial;
 
     [Header("Limitations")]
     public int MaxStars = 16;
@@ -67,7 +71,7 @@ public class Constellation : MonoBehaviour
 
     private void Start()
     {
-        _previewLineRenderer = CreateLineRenderer(new Segment(null,null), null, PreviewSegmentColor, PreviewLineWidth);
+        _previewLineRenderer = CreateLineRenderer(new Segment(null,null), PreviewSegmentMaterial, PreviewSegmentColor, PreviewLineWidth);
         HidePreviewSegment();
     }
 
@@ -102,7 +106,7 @@ public class Constellation : MonoBehaviour
         _lineRenderers.Clear();
         foreach (var segment in Segments)
         {
-            AddLineRenderer(segment,null,SegmentColor,SegmentLineWidth);
+            AddLineRenderer(segment,CurrentSegmentMaterial,SegmentColor,SegmentLineWidth);
         }
     }
 
@@ -148,7 +152,7 @@ public class Constellation : MonoBehaviour
         lineRenderer.startWidth = width;
         lineRenderer.endWidth = width;
         //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.material = SegmentMaterial;
+        lineRenderer.material = material;
         lineRenderer.material.color = color;
 
         if(segment._start!=null && segment._end!=null)
@@ -168,7 +172,7 @@ public class Constellation : MonoBehaviour
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;
-        consCopy.SegmentMaterial = SavedSegmentMaterial;
+        consCopy.currentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
         ClearConstellation();
