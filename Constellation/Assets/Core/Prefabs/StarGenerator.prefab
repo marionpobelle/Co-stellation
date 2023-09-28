@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starPrefab: {fileID: -7795452128222825243, guid: 4d1763ac54bff8e41949fdcc459aab52, type: 3}
-  minMaxXStarCoord: {x: -100, y: 100}
-  minMaxYStarCoord: {x: 0, y: 0}
+  minMaxXStarCoord: {x: -83, y: 83}
+  minMaxYStarCoord: {x: -45, y: 45}
   minMaxScale: {x: 0.5, y: 1.5000001}
-  starsAmount: 500
+  starsAmount: 1000
   minStarDistance: 0.5
   maxTries: 1000
   spawnStarsOnStart: 1

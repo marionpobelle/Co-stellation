@@ -282,6 +282,7 @@ MonoBehaviour:
   PreviewSegmentColor: {r: 0, g: 0.9226117, b: 1, a: 0.68235296}
   PreviewSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
   CurrentSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
+  DistanceBetweenSegmentAndStar: 0
   MaxSegments: 16
   MaxDistance: 15
   _errorSegmentColor: {r: 1, g: 0, b: 0, a: 1}
@@ -1322,26 +1323,6 @@ PrefabInstance:
       propertyPath: starsParent
       value: 
       objectReference: {fileID: 1208675539}
-    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
-      propertyPath: minMaxScale.x
-      value: 0.14477833
-      objectReference: {fileID: 0}
-    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
-      propertyPath: minMaxScale.y
-      value: 2.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
-      propertyPath: minStarDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
-      propertyPath: minMaxYStarCoord.x
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
-      propertyPath: minMaxYStarCoord.y
-      value: 50
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
