@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,9 @@ public class Constellation : MonoBehaviour
 
     public Material CurrentSegmentMaterial;
 
+    [Tooltip("Distance between the star and the start of the segment, except if the stars are too close")]
+    public float DistanceBetweenSegmentAndStar = 0.5f;
+
     [Header("Limitations")]
     public int MaxSegments = 16;
     public float MaxDistance = 50;
@@ -86,7 +90,13 @@ public class Constellation : MonoBehaviour
 
     public bool AddSegment(Segment segment)
     {
-        if (Segments.Find(x => x.Equals(segment)) != null) return false;
+        //We return true because this segment is valid, it's just that it already exists
+        if (Segments.Find(x => x.Equals(segment)) != null) return true;
+
+        if(segment._end== null || segment._start == null)
+        {
+            return false;
+        }
 
         bool tooLong = (segment._end.transform.position - segment._start.transform.position).sqrMagnitude > MaxDistance * MaxDistance;
         if (tooLong)
@@ -97,7 +107,7 @@ public class Constellation : MonoBehaviour
 
         HidePreviewSegment();
         Segments.Add(segment);
-        RefreshRender();
+        AddLineRenderer(segment, CurrentSegmentMaterial, SegmentColor, SegmentLineWidth);
         TweenLineRenderer(_lineRenderers.Last());
 
         return true;
@@ -109,6 +119,13 @@ public class Constellation : MonoBehaviour
 
         if (!playAnimIfTooMany) return true;
 
+        PlayErrorFlashAnimation();
+
+        return true;
+    }
+
+    public void PlayErrorFlashAnimation()
+    {
         foreach (var lineRenderer in _lineRenderers)
         {
             DOTween.Kill(lineRenderer.material);
@@ -120,8 +137,15 @@ public class Constellation : MonoBehaviour
                 }
                 );
         }
+        ErrorOnSegment?.Invoke();
+    }
 
-        return true;
+    public bool StarIsInConstellation(Star starToFind,bool playAnimIfIsntIn = false)
+    {
+        bool isIn = Segments.Find(x => x._start == starToFind || x._end == starToFind) != null;
+        if (!isIn && playAnimIfIsntIn)
+            PlayErrorFlashAnimation();
+        return isIn;
     }
 
     //Returns the start point of the last segment
@@ -130,7 +154,11 @@ public class Constellation : MonoBehaviour
         if (Segments.Count <= 0) return null;
         Star startPointOfLastSegment = Segments.Last()._start;
         Segments.RemoveAt(Segments.Count - 1);
-        RefreshRender();
+        var lastLineRenderer = _lineRenderers.Last();
+
+        _lineRenderers.Remove(lastLineRenderer);
+        TweenLineRenderer(lastLineRenderer, true, true);
+
         return startPointOfLastSegment;
     }
 
@@ -147,7 +175,7 @@ public class Constellation : MonoBehaviour
         }
     }
 
-    private void TweenLineRenderer(LineRenderer lineRenderer)
+    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut=false, bool deleteAtEnd=false)
     {
         //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
@@ -162,9 +190,15 @@ public class Constellation : MonoBehaviour
             {
                 lineRenderer.SetPosition(1, startPosition + direction * x);
             },
-            0,
-            length,
-            0.5f
+            (tweeningOut) ? length : 0,
+            (tweeningOut) ? 0 : length,
+            0.25f
+            ).OnComplete(
+            () => 
+            {
+                if (!deleteAtEnd) return;
+                Destroy(lineRenderer);
+            }
             );
     }
 
@@ -195,6 +229,7 @@ public class Constellation : MonoBehaviour
     {
         _previewLineRenderer.enabled = false;
         DOTween.Kill(_previewLineRenderer);
+        _previewSegmentInErrorMode=false;
         _previewLineRenderer.material.color = PreviewSegmentColor;
     }
 
@@ -216,29 +251,39 @@ public class Constellation : MonoBehaviour
         //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material = material;
         lineRenderer.material.color = color;
+        lineRenderer.textureMode = LineTextureMode.Tile;
 
         if (segment._start != null && segment._end != null)
         {
-            lineRenderer.SetPosition(0, segment._start.transform.position);
-            lineRenderer.SetPosition(1, segment._end.transform.position);
+            var direction = segment._end.transform.position - segment._start.transform.position;
+            var length = direction.magnitude;
+            direction=direction.normalized;
+
+            float offsetLength=(length>3*DistanceBetweenSegmentAndStar) ? DistanceBetweenSegmentAndStar : 0.33f*length;
+
+            lineRenderer.SetPosition(0, segment._start.transform.position+offsetLength*direction);
+            lineRenderer.SetPosition(1, segment._end.transform.position-offsetLength*direction);
         }
 
         return lineRenderer;
     }
 
-    public void SaveConstellation()
+    public bool SaveConstellation()
     {
-        if (Segments.Count <= 0) return;
+        HidePreviewSegment();
+        if (Segments.Count <= 0) return false;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
         consCopy.Segments = Segments;
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;
+        consCopy.DistanceBetweenSegmentAndStar = DistanceBetweenSegmentAndStar;
         consCopy.CurrentSegmentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
         ClearConstellation();
+        return true;
     }
 
     public void ClearConstellation()

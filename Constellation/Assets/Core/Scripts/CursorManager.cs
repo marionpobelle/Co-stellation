@@ -36,7 +36,7 @@ public class CursorManager : MonoBehaviour
     [Tooltip("The speed at which the cursor moves when the player is holding the stick")]
     [SerializeField] private float _freeMovementCursorSpeed = 300;
 
-    
+
     [Serializable]
     internal struct Borders
     {
@@ -51,8 +51,8 @@ public class CursorManager : MonoBehaviour
     public UnityEvent<int> PlacedASegment = new UnityEvent<int>();
     public UnityEvent PlacedAConstellation = new UnityEvent();
     public UnityEvent CancelledASegment = new UnityEvent();
-    public UnityEvent CancelledAConstellation=new UnityEvent();
-    public UnityEvent Snapped=new UnityEvent();
+    public UnityEvent CancelledAConstellation = new UnityEvent();
+    public UnityEvent Snapped = new UnityEvent();
 
     private Star _startStar;
     private Star _endStar;
@@ -67,7 +67,7 @@ public class CursorManager : MonoBehaviour
         InputManager.Instance.OnCancelStep += OnCancelStep;
         InputManager.Instance.OnCancelBuild += OnCancelBuild;
 
-cursorDefaultScale = _cursor.transform.localScale;
+        cursorDefaultScale = _cursor.transform.localScale;
 
         SnapToStar(GetClosestStar(_cursor.transform));
         _previewCursor.enabled = false;
@@ -79,7 +79,7 @@ cursorDefaultScale = _cursor.transform.localScale;
         {
             case BuildingState.ChoosingStartStar:
                 _buildingState = BuildingState.ChoosingEndStar;
-                var startStarOfLastSegment=_previewConstellation.RemoveLastSegment();
+                var startStarOfLastSegment = _previewConstellation.RemoveLastSegment();
                 if (startStarOfLastSegment == null) break;
                 _startStar = startStarOfLastSegment;
                 RefreshPreviewSegment();
@@ -99,39 +99,47 @@ cursorDefaultScale = _cursor.transform.localScale;
         _startStar = null;
         _endStar = null;
         CancelledAConstellation?.Invoke();
+        _buildingState = BuildingState.ChoosingStartStar;
         OnCancelStep();
     }
 
-[SerializeField] float cursorFeedbackDuration;
-Vector3 cursorDefaultScale;
-Coroutine cursorFeedbackRoutine;
-[SerializeField] AnimationCurve cursorFeedbackCurve;
+    [SerializeField] float cursorFeedbackDuration;
+    Vector3 cursorDefaultScale;
+    Coroutine cursorFeedbackRoutine;
+    [SerializeField] AnimationCurve cursorFeedbackCurve;
 
     private void OnConfirm()
     {
         switch (_buildingState)
         {
             case BuildingState.ChoosingStartStar:
-
-                if(_previewConstellation.HasTooManySegments(true)) break;
+                if (_previewConstellation.HasTooManySegments(true)) break;
+                //If we're currently building a constellation, the start star must be in the constellation
+                if (_previewConstellation.Segments.Count > 0 && !_previewConstellation.StarIsInConstellation(CurrentStar, true)) break;
 
                 _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
                 break;
             case BuildingState.ChoosingEndStar:
                 if (_startStar == CurrentStar)
-                { 
+                {
                     break;
                 }
-                
+
+                if (_startStar == null)
+                {
+                    _buildingState = BuildingState.ChoosingStartStar;
+                    break;
+                }
+
                 _endStar = CurrentStar;
 
-                if(!_previewConstellation.AddSegment(_startStar, _endStar)) return;
+                if (!_previewConstellation.AddSegment(_startStar, _endStar)) return;
 
                 _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
 
-                if(_previewConstellation.HasTooManySegments())
+                if (_previewConstellation.HasTooManySegments())
                 {
                     _previewConstellation.HidePreviewSegment();
                     _startStar = null;
@@ -140,37 +148,37 @@ Coroutine cursorFeedbackRoutine;
 
                 PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
                 //feedback animation cursor tweening
-if(cursorFeedbackRoutine != null){
-    StopCoroutine(cursorFeedbackRoutine);
-    cursorFeedbackRoutine = null;
-    _cursor.transform.localScale = cursorDefaultScale;
-}
-StartCoroutine(CursorFeedbackRoutine());
+                if (cursorFeedbackRoutine != null)
+                {
+                    StopCoroutine(cursorFeedbackRoutine);
+                    cursorFeedbackRoutine = null;
+                    _cursor.transform.localScale = cursorDefaultScale;
+                }
+                StartCoroutine(CursorFeedbackRoutine());
                 break;
         }
-        
+
     }
 
-IEnumerator CursorFeedbackRoutine()
-{
-float startTime = Time.time;
-float endTime = Time.time + cursorFeedbackDuration;
-Debug.Log("starting coroutine");
-while(Time.time < endTime)
-{
-    yield return null;
-    
-    float normalizedValue = Mathf.InverseLerp(startTime, endTime, Time.time);
+    IEnumerator CursorFeedbackRoutine()
+    {
+        float startTime = Time.time;
+        float endTime = Time.time + cursorFeedbackDuration;
+        while (Time.time < endTime)
+        {
+            yield return null;
 
-    float scaleMultiplier = cursorFeedbackCurve.Evaluate(normalizedValue);
-Debug.Log(normalizedValue);
-    _cursor.transform.localScale = cursorDefaultScale * scaleMultiplier;
-}
-_cursor.transform.localScale = cursorDefaultScale;
-}
+            float normalizedValue = Mathf.InverseLerp(startTime, endTime, Time.time);
+
+            float scaleMultiplier = cursorFeedbackCurve.Evaluate(normalizedValue);
+            _cursor.transform.localScale = cursorDefaultScale * scaleMultiplier;
+        }
+        _cursor.transform.localScale = cursorDefaultScale;
+    }
 
     private void OnSave()
     {
+        if (_startStar == null && _endStar == null) return;
         _previewConstellation.SaveConstellation();
         _startStar = null;
         _endStar = null;
@@ -257,7 +265,7 @@ _cursor.transform.localScale = cursorDefaultScale;
 
         var targetPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
         _cursor.transform.DOMove(targetPosition, _snapAnimationDuration).SetEase(_snapAnimationCurve).OnUpdate(() =>
-        {   
+        {
             RefreshPreviewSegment();
         });
     }
@@ -310,7 +318,7 @@ _cursor.transform.localScale = cursorDefaultScale;
         {
             return;
         }
-        Vector3 newPosition= _cursor.transform.position + (Vector3)(_currentMoveInput * Time.deltaTime * _freeMovementCursorSpeed);
+        Vector3 newPosition = _cursor.transform.position + (Vector3)(_currentMoveInput * Time.deltaTime * _freeMovementCursorSpeed);
 
         newPosition.x = Mathf.Clamp(newPosition.x, _borders.topLeft.position.x, _borders.bottomRight.position.x);
         newPosition.y = Mathf.Clamp(newPosition.y, _borders.bottomRight.position.y, _borders.topLeft.position.y);

@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleInvertXAxis",
+                    "type": "Button",
+                    "id": "8635b896-e879-4aeb-9a19-aaf73f6e8db8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -140,8 +149,30 @@
                 },
                 {
                     "name": "",
+                    "id": "8fce19b0-9ed1-4949-99a0-ed764adea0d2",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InConfirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e0063353-5ab2-41f9-adab-319c989e316b",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InCancelStep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "239db1e3-7f1c-4ce2-b859-edfc57b6153a",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -239,6 +270,17 @@
                 },
                 {
                     "name": "",
+                    "id": "cad47405-e992-4a5b-beab-252059a5b0a8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InCancelBuild",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5e192aed-e00c-4340-a18c-93302844b32c",
                     "path": "<Gamepad>/start",
                     "interactions": "",
@@ -247,6 +289,50 @@
                     "action": "InSave",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b783844-d854-4608-b22b-04f07c1ba8fa",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InSave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "X",
+                    "id": "06414d8c-34aa-48b2-afb0-ee7805ac35dc",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInvertXAxis",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "71835955-85bd-4fc0-8461-e483310d7935",
+                    "path": "<Keyboard>/#(I)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInvertXAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "b4d3f534-5170-4908-b3b9-89d0ffedd3ea",
+                    "path": "<Keyboard>/#(X)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleInvertXAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

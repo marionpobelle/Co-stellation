@@ -28,10 +28,12 @@ public class InputManager : MonoBehaviour
     public Action OnCancelStep;
     public Action OnCancelBuild;
 
+    bool isAxisInverted = false;
+
     public void OnInMove(InputValue value)
     {
         Vector2 vector2 = value.Get<Vector2>();
-        OnMove?.Invoke(vector2);
+        OnMove?.Invoke(new Vector2(vector2.x * (isAxisInverted ? -1 : 1), vector2.y));
     }
 
     public void OnInSnap(InputValue value)
@@ -58,5 +60,10 @@ public class InputManager : MonoBehaviour
     public void OnInCancelBuild()
     {
         OnCancelBuild?.Invoke();
+    }
+
+    public void OnToggleInvertXAxis()
+    {
+        isAxisInverted = !isAxisInverted;
     }
 }
