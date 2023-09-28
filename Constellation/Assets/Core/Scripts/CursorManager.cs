@@ -51,6 +51,7 @@ public class CursorManager : MonoBehaviour
     public UnityEvent PlacedAConstellation = new UnityEvent();
     public UnityEvent CancelledASegment = new UnityEvent();
     public UnityEvent CancelledAConstellation=new UnityEvent();
+    public UnityEvent Snapped=new UnityEvent();
 
 
     private Star _startStar;
@@ -204,6 +205,8 @@ public class CursorManager : MonoBehaviour
         _previewCursor.enabled = false;
 
         Vector3 position = nextStar.transform.position;
+
+        Snapped?.Invoke();
 
         var targetPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, position);
         _cursor.transform.DOMove(targetPosition, _snapAnimationDuration).SetEase(_snapAnimationCurve).OnUpdate(() =>

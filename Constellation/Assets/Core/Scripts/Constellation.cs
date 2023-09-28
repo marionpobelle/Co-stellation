@@ -47,8 +47,6 @@ public class Constellation : MonoBehaviour
     public Color SegmentColor=Color.blue;
     public Color PreviewSegmentColor=Color.gray;
 
-    Material currentMaterial;
-
     public Material PreviewSegmentMaterial;
 
     public Material CurrentSegmentMaterial;
@@ -193,7 +191,7 @@ public class Constellation : MonoBehaviour
         consCopy.SegmentColor = SavedSegmentColor;
         consCopy.SegmentLineWidth = SavedSegmentLineWidth;
         consCopy.StarsParent = StarsParent;
-        consCopy.currentMaterial = SavedSegmentMaterial;
+        consCopy.CurrentSegmentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
         ClearConstellation();

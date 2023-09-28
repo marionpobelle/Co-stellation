@@ -258,23 +258,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarsParent: {fileID: 1208675538}
-  SegmentLineWidth: 0.6
-  PreviewLineWidth: 0.3
+  SegmentLineWidth: 0.7
+  PreviewLineWidth: 0.5
   SegmentColor: {r: 0.18831526, g: 0.8962264, b: 0.097232126, a: 1}
   PreviewSegmentColor: {r: 0.27144888, g: 0.9433962, b: 0.4178148, a: 0.68235296}
-  SegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
+  PreviewSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
+  CurrentSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
   MaxStars: 16
   MaxDistance: 50
   _errorSegmentColor: {r: 1, g: 0, b: 0, a: 1}
   _errorAnimationCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1.0014509
+      inSlope: -0.016469479
+      outSlope: -0.016469479
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2.6037724
+      outSlope: -2.6037724
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08333337
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   SavedSegmentColor: {r: 0, g: 1, b: 0.82268715, a: 1}
   SavedSegmentLineWidth: 0.5
-  SavedSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
+  SavedSegmentMaterial: {fileID: 2100000, guid: 9405fc20197aaa04b831fe72a0d125f7, type: 2}
 --- !u!4 &494008806
 Transform:
   m_ObjectHideFlags: 0
