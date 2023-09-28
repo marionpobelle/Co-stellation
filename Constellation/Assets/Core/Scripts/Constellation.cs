@@ -51,6 +51,7 @@ public class Constellation : MonoBehaviour
     [Header("Saved constellations attributes")]
     public Color SavedSegmentColor=Color.white;
     public float SavedSegmentLineWidth=0.5f;
+    public Material SavedSegmentMaterial;
 
     private void Start()
     {

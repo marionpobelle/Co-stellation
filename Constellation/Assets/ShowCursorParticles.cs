@@ -29,7 +29,7 @@ public class ShowCursorParticles : MonoBehaviour
 
         transform.position = cam.ViewportToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam));
         //transform.position = new Vector3(normalizedCursorPosX, normalizedCursorPosY,0);
-        Debug.Log($"x lerped val : {normalizedCursorPosX} | func val : {cam.ScreenToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam))}");
+        //Debug.Log($"x lerped val : {normalizedCursorPosX} | func val : {cam.ScreenToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam))}");
 
         //If selected, animation
         //anim.SetTrigger("Select");
