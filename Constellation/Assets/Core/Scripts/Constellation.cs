@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,8 @@ public class Constellation : MonoBehaviour
         if (Segments.Count <= 0) return null;
         Star startPointOfLastSegment = Segments.Last()._start;
         Segments.RemoveAt(Segments.Count - 1);
+        _lineRenderers.Remove(lastLineRenderer);
+        TweenLineRenderer(lastLineRenderer, true, true);
         RefreshRender();
         return startPointOfLastSegment;
     }
@@ -167,7 +170,7 @@ public class Constellation : MonoBehaviour
         }
     }
 
-    private void TweenLineRenderer(LineRenderer lineRenderer)
+    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut=false, bool deleteAtEnd=false)
     {
         //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
@@ -182,9 +185,15 @@ public class Constellation : MonoBehaviour
             {
                 lineRenderer.SetPosition(1, startPosition + direction * x);
             },
-            0,
-            length,
+            (tweeningOut) ? length : 0,
+            (tweeningOut) ? 0 : length,
             0.25f
+            ).OnComplete(
+            () => 
+            {
+                if (!deleteAtEnd) return;
+                Destroy(lineRenderer);
+            }
             );
     }
 
