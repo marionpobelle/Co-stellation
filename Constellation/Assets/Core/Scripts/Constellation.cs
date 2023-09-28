@@ -83,8 +83,10 @@ public class Constellation : MonoBehaviour
     public void AddSegment(Segment segment)
     {
         if( Segments.Find(x=>x.Equals(segment))!=null ) return;
+        HidePreviewSegment();
         Segments.Add(segment);
         RefreshRender();
+        TweenLineRenderer(_lineRenderers.Last());
     }
 
     //Returns the start point of the last segment
@@ -110,6 +112,22 @@ public class Constellation : MonoBehaviour
         }
     }
 
+    private void TweenLineRenderer(LineRenderer lineRenderer)
+    {
+        Vector3 startPosition = lineRenderer.GetPosition(0);
+        float length = (lineRenderer.GetPosition(0) - lineRenderer.GetPosition(1)).magnitude;
+        Vector3 direction=(lineRenderer.GetPosition(1)-lineRenderer.GetPosition(0)).normalized;
+        DOTween.To(
+            x =>
+            {
+                lineRenderer.SetPosition(1,startPosition + direction * x);
+            },
+            0,
+            length,
+            0.5f
+            );
+    }
+
     public void PreviewSegment(Vector3 start, Vector3 end)
     {
         _previewLineRenderer.enabled = true;
@@ -119,8 +137,8 @@ public class Constellation : MonoBehaviour
         if((end-start).sqrMagnitude>MaxDistance*MaxDistance && !_previewSegmentInErrorMode)
         {
             _previewSegmentInErrorMode = true;
-            DOTween.Kill(_previewLineRenderer);
-            _previewLineRenderer.DOColor(new Color2(PreviewSegmentColor, PreviewSegmentColor), new Color2(_errorSegmentColor, _errorSegmentColor), 0.2f);
+            DOTween.Kill(_previewLineRenderer.material);
+            _previewLineRenderer.material.DOColor(_errorSegmentColor, 0.2f);
             return;
         }
 
@@ -128,12 +146,14 @@ public class Constellation : MonoBehaviour
 
         _previewSegmentInErrorMode = false;
         DOTween.Kill(_previewLineRenderer);
-        _previewLineRenderer.DOColor(new Color2(_errorSegmentColor, PreviewSegmentColor), new Color2(_errorSegmentColor, PreviewSegmentColor), 0.2f);
+        _previewLineRenderer.material.DOColor(PreviewSegmentColor, 0.2f);
     }
 
     public void HidePreviewSegment()
     {
         _previewLineRenderer.enabled = false;
+        DOTween.Kill(_previewLineRenderer);
+        _previewLineRenderer.material.color=PreviewSegmentColor;
     }
 
     private void AddLineRenderer(Segment segment, Material material, Color color,float width)
@@ -166,6 +186,7 @@ public class Constellation : MonoBehaviour
 
     public void SaveConstellation()
     {
+        if(Segments.Count<=0) return;
         var consCopy = new GameObject().AddComponent<Constellation>();
         consCopy.gameObject.name = "Constellation";
         consCopy.Segments = Segments;
