@@ -231,6 +231,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Error
+    clip: {fileID: 8300000, guid: d8cefc0cfdc5bf344ac375db80a93c19, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &136349213
 Transform:
   m_ObjectHideFlags: 0
@@ -324,7 +330,19 @@ MonoBehaviour:
   SavedSegmentMaterial: {fileID: 2100000, guid: 9405fc20197aaa04b831fe72a0d125f7, type: 2}
   ErrorOnSegment:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 136349212}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Error
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &494008806
 Transform:
   m_ObjectHideFlags: 0

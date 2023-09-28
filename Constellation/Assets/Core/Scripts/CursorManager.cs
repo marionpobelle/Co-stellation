@@ -54,7 +54,6 @@ public class CursorManager : MonoBehaviour
     public UnityEvent CancelledAConstellation=new UnityEvent();
     public UnityEvent Snapped=new UnityEvent();
 
-
     private Star _startStar;
     private Star _endStar;
     public BuildingState _buildingState = BuildingState.ChoosingStartStar;
