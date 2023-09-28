@@ -101,4 +101,13 @@ public class AudioManager : MonoBehaviour
         }
         s.source.PlayOneShot(s.clip);
     }
+
+    /***
+    Plays a random Grab SFX.
+    ***/
+    public void PlayRandomGrabSFX(){
+        int randomSFX = UnityEngine.Random.Range(0,8);
+        Sound s = sounds[randomSFX];
+        PlayOneShot(s.name);
+    }
 }
