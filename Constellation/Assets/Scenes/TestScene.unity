@@ -259,12 +259,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StarsParent: {fileID: 1208675538}
   SegmentLineWidth: 0.6
-  PreviewLineWidth: 0.3
+  PreviewLineWidth: 0.4
   SegmentColor: {r: 0.18831526, g: 0.8962264, b: 0.097232126, a: 1}
   PreviewSegmentColor: {r: 0.27144888, g: 0.9433962, b: 0.4178148, a: 0.68235296}
   SegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
   MaxStars: 16
-  MaxDistance: 1
+  MaxDistance: 15.41
   _errorSegmentColor: {r: 1, g: 0, b: 0, a: 1}
   _errorAnimationCurve:
     serializedVersion: 2
