@@ -221,7 +221,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LinkCancelled
     clip: {fileID: 8300000, guid: 6a13f2d564128964f8c2402b2e45f361, type: 3}
-    volume: 0.1
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Error
     clip: {fileID: 8300000, guid: d8cefc0cfdc5bf344ac375db80a93c19, type: 3}
-    volume: 0.1
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
