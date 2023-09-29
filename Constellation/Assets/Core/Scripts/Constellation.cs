@@ -205,7 +205,7 @@ public class Constellation : MonoBehaviour
         }
     }
 
-    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut = false, bool deleteAtEnd = false, float duration=0.25f, bool tweenNeighbours=false, bool mustReenableLineRenderer=false)
+    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut = false, bool deleteAtEnd = false, float duration=0.25f, bool tweenNeighbours=false, bool mustReenableLineRenderer=false, bool lookForOtherWayNeighbours=false)
     {
         //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
@@ -223,7 +223,14 @@ public class Constellation : MonoBehaviour
             {
                 //Currently the tweenNEighbor thing is only used to display the constellation. Before that, every line renderer is disabled. If it aint, it means the line renderer has already been tweened in. Avoid glitches on circular constellation parts. (infinite loop)
                 if (otherLineRenderer.enabled) continue;
-                if(otherLineRenderer.GetPosition(0) == lineRenderer.GetPosition(1))
+                bool isNeighbour = otherLineRenderer.GetPosition(0) == lineRenderer.GetPosition(1);
+
+                if (lookForOtherWayNeighbours)
+                {
+                    isNeighbour |= (otherLineRenderer.GetPosition(0) == lineRenderer.GetPosition(0)) && (otherLineRenderer.GetPosition(1) != lineRenderer.GetPosition(1)); //Avoid being your own neighbour
+                }
+
+                if ( isNeighbour )
                 {
                     neighborLineRenderers.Add(otherLineRenderer);
                 }                  
@@ -240,6 +247,7 @@ public class Constellation : MonoBehaviour
         var anim=DOTween.To(
             x =>
             {
+                isTweeningConstellation = true;
                 lineRenderer.SetPosition(1, startPosition + direction * x);
             },
             (tweeningOut) ? length : 0,
@@ -357,7 +365,7 @@ public class Constellation : MonoBehaviour
         {
             lineRenderer.enabled = false;
         }
-        consCopy.TweenLineRenderer(consCopy.LineRenderers[0], false, false, 0.25f, true, true);
+        consCopy.TweenLineRenderer(consCopy.LineRenderers[0], false, false, 0.25f, true, true,true);
 
         ClearConstellation();
         return true;

@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
     public void OnInSnap(InputValue value)
     {
         Vector2 vector2 = value.Get<Vector2>();
-        OnSnap?.Invoke(vector2);
+        OnSnap?.Invoke(new Vector2(vector2.x * (isAxisInverted ? -1 : 1), vector2.y));
     }
 
     public void OnInConfirm()
