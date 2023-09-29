@@ -24,10 +24,7 @@ public class ShowCursorParticles : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float normalizedCursorPosX = Mathf.InverseLerp((-Screen.width)/2f, (Screen.width)/2f, cursorPos.localPosition.x );
-        float normalizedCursorPosY = Mathf.InverseLerp((-Screen.height)/2f, (Screen.height)/2f, cursorPos.localPosition.y );
-
-        transform.position = cam.ViewportToWorldPoint(new Vector3(normalizedCursorPosX, normalizedCursorPosY, distanceToCam));
+        transform.position = CursorManager.Instance.GetCursorWorldPosition();
         //If selected, animation
         //anim.SetTrigger("Select");
 

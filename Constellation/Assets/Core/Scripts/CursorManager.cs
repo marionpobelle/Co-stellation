@@ -311,6 +311,11 @@ public class CursorManager : MonoBehaviour
         return closestStar;
     }
 
+    public Vector3 GetCursorWorldPosition()
+    {
+        return GetCursorWorldPosition(_cursor.transform);
+    }
+
     public Vector3 GetCursorWorldPosition(Transform cursor)
     {
         var screenPosition = cursor.gameObject.transform.position;
