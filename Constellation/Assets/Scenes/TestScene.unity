@@ -1199,6 +1199,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4221843387960369170, guid: ad990e668ab1ffc46b694a850be97e33, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 5287847759724709611, guid: ad990e668ab1ffc46b694a850be97e33, type: 3}
       propertyPath: m_Name
       value: Canvas (1)
@@ -1348,6 +1352,14 @@ PrefabInstance:
       propertyPath: starsParent
       value: 
       objectReference: {fileID: 1208675539}
+    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
+      propertyPath: minMaxXStarCoord.x
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8539607396101476080, guid: 6ac39429a5ad7b949a7dd7c4a0f0d865, type: 3}
+      propertyPath: minMaxXStarCoord.y
+      value: 45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
