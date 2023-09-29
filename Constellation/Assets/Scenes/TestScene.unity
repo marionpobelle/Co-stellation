@@ -155,55 +155,55 @@ MonoBehaviour:
   sounds:
   - name: GrabDO1
     clip: {fileID: 8300000, guid: 0cfb3f7ad6d44da408ade2b75cf3e512, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabDO2
     clip: {fileID: 8300000, guid: 1f5fa98ed915ed341a6bf5697dd4589e, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabFA1
     clip: {fileID: 8300000, guid: 6ee87d4678692264193763b8ac32cd7d, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabLA1
     clip: {fileID: 8300000, guid: 5373d54f8aa34724eb991474dd19773c, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabMI1
     clip: {fileID: 8300000, guid: 20827739a78fdc148811b4ea4f0e65d5, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabRE1
     clip: {fileID: 8300000, guid: 6032aa70cea804a488aeeeec9d002402, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabSlb1
     clip: {fileID: 8300000, guid: d0164676563697c499080b4ca09978a0, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: GrabSOL1
     clip: {fileID: 8300000, guid: 252a186c4064a1943be2ad05c1e003a9, type: 3}
-    volume: 0.1
+    volume: 0.09
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Music
     clip: {fileID: 8300000, guid: cd0901883273c114fa33fbf093a22642, type: 3}
-    volume: 0.1
+    volume: 0.2
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -226,8 +226,8 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Snap
-    clip: {fileID: 8300000, guid: 7da51d2e231ab754ebdd4d62b182fec9, type: 3}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: e8cc2e8a31044fc43a9f0fcbbaaa520e, type: 3}
+    volume: 0.08
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32aea75a64a2d8458fdf9d1046fa73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Segments: []
   StarsParent: {fileID: 1208675538}
   SegmentLineWidth: 1.2
   PreviewLineWidth: 0.5
@@ -331,6 +332,8 @@ MonoBehaviour:
   SavedSegmentMaterial: {fileID: 2100000, guid: 9405fc20197aaa04b831fe72a0d125f7, type: 2}
   minDefaultAlpha: 0.01
   maxDefaultAlpha: 0.08
+  minSelectedAlpha: 0.5
+  maxSelectedAlpha: 0.8
   fadingSpeed: 0.5
   ErrorOnSegment:
     m_PersistentCalls:
