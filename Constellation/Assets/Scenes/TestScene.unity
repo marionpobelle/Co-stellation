@@ -291,7 +291,7 @@ MonoBehaviour:
   CurrentSegmentMaterial: {fileID: 2100000, guid: 3006abfb552ce4b42ab65c28fc605be9, type: 2}
   DistanceBetweenSegmentAndStar: 0
   MaxSegments: 16
-  MaxDistance: 15
+  MaxDistance: 9
   _errorSegmentColor: {r: 1, g: 0, b: 0, a: 1}
   _errorAnimationCurve:
     serializedVersion: 2
