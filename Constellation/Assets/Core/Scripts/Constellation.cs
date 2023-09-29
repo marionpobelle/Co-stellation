@@ -79,6 +79,7 @@ public class Constellation : MonoBehaviour
     public float maxSelectedAlpha = .8f;
     public float fadingSpeed = .5f;
     float random;
+    bool isTweeningConstellation = false;
 
     [Header("Callbacks")]
     public UnityEvent ErrorOnSegment = new UnityEvent();
@@ -95,7 +96,7 @@ public class Constellation : MonoBehaviour
 
     private void Update()
     {
-        if (StarIsInConstellation(CursorManager.Instance.CurrentStar))
+        if (StarIsInConstellation(CursorManager.Instance.CurrentStar) || isTweeningConstellation)
         {
             foreach (var item in LineRenderers)
             {
@@ -217,6 +218,7 @@ public class Constellation : MonoBehaviour
 
         if(tweenNeighbours)
         {
+            isTweeningConstellation = true;
             foreach(var otherLineRenderer in LineRenderers)
             {
                 //Currently the tweenNEighbor thing is only used to display the constellation. Before that, every line renderer is disabled. If it aint, it means the line renderer has already been tweened in. Avoid glitches on circular constellation parts. (infinite loop)
@@ -225,7 +227,7 @@ public class Constellation : MonoBehaviour
                 {
                     neighborLineRenderers.Add(otherLineRenderer);
                 }                  
-            }
+            }  
         }
 
         if(mustReenableLineRenderer)
@@ -255,6 +257,10 @@ public class Constellation : MonoBehaviour
                     foreach(var nlr in neighborLineRenderers)
                     {
                         TweenLineRenderer(nlr, false, false, duration, true,true);
+                    }
+                    if (neighborLineRenderers.Count <= 0) 
+                    {
+                        isTweeningConstellation = false;
                     }
                 }
             }
