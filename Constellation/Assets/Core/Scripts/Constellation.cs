@@ -41,7 +41,7 @@ public class Constellation : MonoBehaviour
 
     private Segment _previewSegment;
 
-    private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
+    public List<LineRenderer> LineRenderers = new List<LineRenderer>();
     private LineRenderer _previewLineRenderer;
 
     public GameObject StarsParent;
@@ -97,14 +97,14 @@ public class Constellation : MonoBehaviour
     {
         if (StarIsInConstellation(CursorManager.Instance.CurrentStar))
         {
-            foreach (var item in _lineRenderers)
+            foreach (var item in LineRenderers)
             {
                 item.material.SetFloat("_Alpha", Mathf.Lerp(minSelectedAlpha, maxSelectedAlpha, Mathf.InverseLerp(-1, 1, MathF.Cos(Time.time * fadingSpeed + random))));
             }
         }
         else
         {
-            foreach (var item in _lineRenderers)
+            foreach (var item in LineRenderers)
             {
                 item.material.SetFloat("_Alpha", Mathf.Lerp(minDefaultAlpha, maxDefaultAlpha, Mathf.InverseLerp(-1, 1, MathF.Cos(Time.time * fadingSpeed + random))));
             }
@@ -137,7 +137,7 @@ public class Constellation : MonoBehaviour
         HidePreviewSegment();
         Segments.Add(segment);
         AddLineRenderer(segment, CurrentSegmentMaterial, SegmentColor, SegmentLineWidth);
-        TweenLineRenderer(_lineRenderers.Last());
+        TweenLineRenderer(LineRenderers.Last());
 
         return true;
     }
@@ -155,7 +155,7 @@ public class Constellation : MonoBehaviour
 
     public void PlayErrorFlashAnimation()
     {
-        foreach (var lineRenderer in _lineRenderers)
+        foreach (var lineRenderer in LineRenderers)
         {
             DOTween.Kill(lineRenderer.material);
             lineRenderer.material.color = SegmentColor;
@@ -183,9 +183,9 @@ public class Constellation : MonoBehaviour
         if (Segments.Count <= 0) return null;
         Star startPointOfLastSegment = Segments.Last()._start;
         Segments.RemoveAt(Segments.Count - 1);
-        var lastLineRenderer = _lineRenderers.Last();
+        var lastLineRenderer = LineRenderers.Last();
 
-        _lineRenderers.Remove(lastLineRenderer);
+        LineRenderers.Remove(lastLineRenderer);
         TweenLineRenderer(lastLineRenderer, true, true);
 
         return startPointOfLastSegment;
@@ -193,18 +193,18 @@ public class Constellation : MonoBehaviour
 
     private void RefreshRender()
     {
-        foreach (var lineRenderer in _lineRenderers)
+        foreach (var lineRenderer in LineRenderers)
         {
             Destroy(lineRenderer.gameObject);
         }
-        _lineRenderers.Clear();
+        LineRenderers.Clear();
         foreach (var segment in Segments)
         {
             AddLineRenderer(segment, CurrentSegmentMaterial, SegmentColor, SegmentLineWidth);
         }
     }
 
-    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut = false, bool deleteAtEnd = false)
+    private void TweenLineRenderer(LineRenderer lineRenderer, bool tweeningOut = false, bool deleteAtEnd = false, float duration=0.25f, bool tweenNeighbours=false, bool mustReenableLineRenderer=false)
     {
         //The start position of the line renderer, basically the starting star 
         Vector3 startPosition = lineRenderer.GetPosition(0);
@@ -213,22 +213,57 @@ public class Constellation : MonoBehaviour
         //The direction from line start to line end
         Vector3 direction = (lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0)).normalized;
 
+        List<LineRenderer> neighborLineRenderers = new List<LineRenderer>();
+
+        if(tweenNeighbours)
+        {
+            foreach(var otherLineRenderer in LineRenderers)
+            {
+                //Currently the tweenNEighbor thing is only used to display the constellation. Before that, every line renderer is disabled. If it aint, it means the line renderer has already been tweened in. Avoid glitches on circular constellation parts. (infinite loop)
+                if (otherLineRenderer.enabled) continue;
+                if(otherLineRenderer.GetPosition(0) == lineRenderer.GetPosition(1))
+                {
+                    neighborLineRenderers.Add(otherLineRenderer);
+                }                  
+            }
+        }
+
+        if(mustReenableLineRenderer)
+        {
+            lineRenderer.SetPosition(1, startPosition);
+            lineRenderer.enabled = true;
+        }
+
         //Tween between 0 and full length, at each frame, the x will be somewhere between 0 and full length, and we'll get the point in between
-        DOTween.To(
+        var anim=DOTween.To(
             x =>
             {
                 lineRenderer.SetPosition(1, startPosition + direction * x);
             },
             (tweeningOut) ? length : 0,
             (tweeningOut) ? 0 : length,
-            0.25f
+            duration
             ).OnComplete(
             () =>
             {
-                if (!deleteAtEnd) return;
-                Destroy(lineRenderer);
+                if (deleteAtEnd) 
+                {
+                    Destroy(lineRenderer);
+                }
+                if(tweenNeighbours)
+                {
+                    foreach(var nlr in neighborLineRenderers)
+                    {
+                        TweenLineRenderer(nlr, false, false, duration, true,true);
+                    }
+                }
             }
             );
+
+        if (tweenNeighbours)
+        {
+            anim.SetEase(Ease.Linear);
+        }
     }
 
     public void PreviewSegment(Vector3 start, Vector3 end)
@@ -265,7 +300,7 @@ public class Constellation : MonoBehaviour
     private void AddLineRenderer(Segment segment, Material material, Color color, float width)
     {
         var lineRenderer = CreateLineRenderer(segment, material, color, width);
-        _lineRenderers.Add(lineRenderer);
+        LineRenderers.Add(lineRenderer);
     }
 
     private LineRenderer CreateLineRenderer(Segment segment, Material material, Color color, float width)
@@ -311,6 +346,13 @@ public class Constellation : MonoBehaviour
         consCopy.CurrentSegmentMaterial = SavedSegmentMaterial;
 
         consCopy.RefreshRender();
+
+        foreach(var lineRenderer in consCopy.LineRenderers)
+        {
+            lineRenderer.enabled = false;
+        }
+        consCopy.TweenLineRenderer(consCopy.LineRenderers[0], false, false, 0.25f, true, true);
+
         ClearConstellation();
         return true;
     }

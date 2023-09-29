@@ -259,17 +259,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7d8dca25-6c6a-4298-9240-bc9d28147ed9",
-                    "path": "<Gamepad>/select",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "InCancelBuild",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "cad47405-e992-4a5b-beab-252059a5b0a8",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

@@ -121,6 +121,9 @@ public class CursorManager : MonoBehaviour
                 //If we're currently building a constellation, the start star must be in the constellation
                 if (_previewConstellation.Segments.Count > 0 && !_previewConstellation.StarIsInConstellation(CurrentStar, true)) break;
 
+                Debug.Log("Sound on shose start star");
+                PlacedASegment?.Invoke(_previewConstellation.Segments.Count);
+
                 _buildingState = BuildingState.ChoosingEndStar;
                 _startStar = CurrentStar;
                 break;
