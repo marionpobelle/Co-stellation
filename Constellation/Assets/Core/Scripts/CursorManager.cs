@@ -325,6 +325,22 @@ public class CursorManager : MonoBehaviour
         return worldPosition;
     }
 
+    public void HideCursor()
+    {
+        if (_cursor != null)
+        {
+            _cursor.gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowCursor()
+    {
+        if (_cursor != null)
+        {
+            _cursor.gameObject.SetActive(true);
+        }
+    }
+
     public void Update()
     {
         if (_currentMoveInput == Vector2.zero)

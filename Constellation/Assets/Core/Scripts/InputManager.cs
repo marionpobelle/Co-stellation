@@ -28,6 +28,8 @@ public class InputManager : MonoBehaviour
     public Action OnCancelStep;
     public Action OnCancelBuild;
 
+    public Action OnSaveScreenshots;
+
     bool isAxisInverted = false;
 
     public void OnInMove(InputValue value)
@@ -65,5 +67,10 @@ public class InputManager : MonoBehaviour
     public void OnToggleInvertXAxis()
     {
         isAxisInverted = !isAxisInverted;
+    }
+
+    public void OnInSaveScreenshots()
+    {
+        OnSaveScreenshots?.Invoke();
     }
 }

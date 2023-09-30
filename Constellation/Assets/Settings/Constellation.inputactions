@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "InSaveScreenshots",
+                    "type": "Button",
+                    "id": "e4ecbd5f-e058-481c-a7d6-c3b55016ee7c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -322,6 +331,17 @@
                     "action": "ToggleInvertXAxis",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ace5ad97-192b-41e0-ade8-eafa9809ec32",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InSaveScreenshots",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

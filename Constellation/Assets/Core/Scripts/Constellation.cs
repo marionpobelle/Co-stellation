@@ -37,6 +37,8 @@ public class Segment
 
 public class Constellation : MonoBehaviour
 {
+    public static List<Constellation> Constellations = new List<Constellation>();
+
     public List<Segment> Segments = new List<Segment>();
 
     private Segment _previewSegment;
@@ -84,6 +86,8 @@ public class Constellation : MonoBehaviour
     [Header("Callbacks")]
     public UnityEvent ErrorOnSegment = new UnityEvent();
 
+    public bool StopChangingAlpha = false;
+
 
     private void Start()
     {
@@ -91,11 +95,12 @@ public class Constellation : MonoBehaviour
         HidePreviewSegment();
         random = UnityEngine.Random.Range(0f, 100f);
 
-        
+        Constellations.Add(this);
     }
 
     private void Update()
     {
+        if(StopChangingAlpha) return;
         if (StarIsInConstellation(CursorManager.Instance.CurrentStar) || isTweeningConstellation)
         {
             foreach (var item in LineRenderers)
@@ -111,6 +116,15 @@ public class Constellation : MonoBehaviour
             }
         }
     }
+
+    public void ChangeConstellationAlpha(float value)
+    {
+        foreach (var item in LineRenderers)
+        {
+            item.material.SetFloat("_Alpha",value);
+        }
+    }
+
 
     public bool AddSegment(Star start, Star end)
     {
