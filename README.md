@@ -30,6 +30,22 @@ We left the game to run in one of the school's rooms on the Friday afternoon fol
 
 _______________________________________________________________________________________________________
 
+
+# Demo
+
+_______________________________________________________________________________________________________
+
+# Trailer
+
+[CoStellation - TRAILER](https://youtu.be/-Ndb7TmDYDI)
+
+_______________________________________________________________________________________________________
+
+# Bonus
+
+[CoStellation - MAKING OFF](https://youtu.be/uRq9EyqtHCM)
+_______________________________________________________________________________________________________
+
 # Development
 
 ![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
@@ -49,13 +65,15 @@ ________________________________________________________________________________
 🖌️ Visuals : [Benjjamin PHILIPPOT](https://ben-phi.itch.io/)
 
 💻 Developer : [Jérémy Loïc AUCLAIR](https://pordrack.itch.io/)
+
 💻 Developer : [Louis VOGEL](https://louis-vogel.itch.io/)
+
 💻 Developer : [Marion POBELLE](https://vitaminexe.itch.io/)
+
 👔 Project Manager : [Gaïa BROILLIARD](https://skrimsly.itch.io/)
+
 🧠 Ergonomic : [Simon RUIZ](https://itch.io/profile/stalzak)
 
-_______________________________________________________________________________________________________
 
-# Demo
 
 
