@@ -48,9 +48,9 @@ ________________________________________________________________________________
 
 # Development
 
-![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
-
 This game was made using [Unity](https://unity.com/fr).
+
+![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
 
 _______________________________________________________________________________________________________
 
