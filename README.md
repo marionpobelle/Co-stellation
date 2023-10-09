@@ -41,9 +41,13 @@ ________________________________________________________________________________
 # Team
 
 🎵 Sound : [Frédéric KUKOVICIC](https://itch.io/profile/fredkvc)
+
 🎲 Game Design : [Myriam QUERO](https://itch.io/profile/sheyrin)
+
 🖌️ Visuals : [Hugo BAYLE](https://napolo.itch.io/)
+
 🖌️ Visuals : [Benjjamin PHILIPPOT](https://ben-phi.itch.io/)
+
 💻 Developer : [Jérémy Loïc AUCLAIR](https://pordrack.itch.io/)
 💻 Developer : [Louis VOGEL](https://louis-vogel.itch.io/)
 💻 Developer : [Marion POBELLE](https://vitaminexe.itch.io/)
