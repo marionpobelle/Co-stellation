@@ -64,7 +64,7 @@ ________________________________________________________________________________
 
 🖌️ Visuals : [Hugo BAYLE](https://napolo.itch.io/)
 
-🖌️ Visuals : [Benjjamin PHILIPPOT](https://ben-phi.itch.io/)
+🖌️ Visuals : [Benjamin PHILIPPOT](https://ben-phi.itch.io/)
 
 💻 Developer : [Jérémy Loïc AUCLAIR](https://pordrack.itch.io/)
 
