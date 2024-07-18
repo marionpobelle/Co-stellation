@@ -10,6 +10,8 @@ Using a projector, a mirror, leds and scraps, we built a tent that immerses the 
 
 ![Sans_sqd2](https://github.com/marionpobelle/Co-stellation/assets/112869026/ddded27f-414d-4a78-b9dd-e0d78011ae1d)
 
+CoStellation was presented during the 2024 edition of the “Les Mycéliades” festival held at the Alpha media-library in Angoulême.
+
 _______________________________________________________________________________________________________
 
 # Notebook
