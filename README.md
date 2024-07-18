@@ -7,8 +7,9 @@ Take a little break from your hectic day to gaze at the stars!
 CoStellation is the result of a 3 and a half day workshop whose objective was to create an interactive experience whose inputs would be basic (keyboard, mouse, joystick) but whose outputs would not be limited to a computer screen.
 
 CoStellation was presented during the 2024 edition of the “Les Mycéliades” festival held at the Alpha media-library in Angoulême.
+<p align="center">
 ![MYCELIADES_400x800](https://github.com/user-attachments/assets/d7b545dd-f58c-4e56-ab5c-602dad0e9008)
-
+</p>
 Using a projector, a mirror, leds and scraps, we built a tent that immerses the player in the atmosphere of an evening watching the starry sky.
 
 ![Sans_sqd2](https://github.com/marionpobelle/Co-stellation/assets/112869026/ddded27f-414d-4a78-b9dd-e0d78011ae1d)
