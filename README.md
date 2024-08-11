@@ -21,16 +21,8 @@ Using a projector, a mirror, leds and scraps, we built a tent that immerses the 
 
 ![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
 
-## Trailer
-
-[CoStellation - TRAILER](https://youtu.be/-Ndb7TmDYDI)
-
-## Demo
-
-https://github.com/marionpobelle/Co-stellation/assets/112869026/5e6330e0-ac72-484d-9e4a-84509c38251d
-
-But the experience isn't limited to observation: the player also has a joystick that he can use to draw his own constellations! Placed in the tent, a notebook allows players to immortalize their creation in pencil, drawing and naming it, so that future players can find it in the starry sky.
-We left the game to run in one of the school's rooms on the Friday afternoon following the workshop. Here's the result and some of the drawings !
+The experience isn't limited to observation: the player also has a joystick that they can use to draw their own constellations! Placed in the tent, a notebook allows players to draw and name their creation, so that future players can find it.
+We left the game to run in one of the school's rooms on the Friday afternoon following the workshop. Here's the result !
 
 ![20231002_164755](https://github.com/marionpobelle/Co-stellation/assets/112869026/49a9c8b8-c521-4cfd-aa5f-32f7ae6cb70c)
 
@@ -43,6 +35,14 @@ We left the game to run in one of the school's rooms on the Friday afternoon fol
 ![20231002_164653](https://github.com/marionpobelle/Co-stellation/assets/112869026/60721380-dc29-43ff-a07d-88bc31e3bfa4)
 
 ![20231002_164621](https://github.com/marionpobelle/Co-stellation/assets/112869026/8434f1ad-53e7-45ae-9172-a5aeff8e8914)
+
+## Demo
+
+https://github.com/marionpobelle/Co-stellation/assets/112869026/5e6330e0-ac72-484d-9e4a-84509c38251d
+
+## Trailer
+
+[CoStellation - TRAILER](https://youtu.be/-Ndb7TmDYDI)
 
 ## Team
 
