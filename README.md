@@ -1,4 +1,5 @@
-# Presentation
+# CoStellation
+## Summary
 
 ![Costellation_Affiche-1](https://github.com/marionpobelle/Co-stellation/assets/112869026/670b8f0f-8652-4fb6-9afc-a01c4cca6b4c)
 
@@ -10,13 +11,24 @@ CoStellation was presented during the 2024 edition of the “Les Mycéliades” 
 
 ![MYCELIADES_400x800](https://github.com/user-attachments/assets/d7b545dd-f58c-4e56-ab5c-602dad0e9008)
 
+## Development
+
+This game was made using [Unity](https://unity.com/fr).
+
+![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
+
 Using a projector, a mirror, leds and scraps, we built a tent that immerses the player in the atmosphere of an evening watching the starry sky.
 
 ![Sans_sqd2](https://github.com/marionpobelle/Co-stellation/assets/112869026/ddded27f-414d-4a78-b9dd-e0d78011ae1d)
 
-_______________________________________________________________________________________________________
+## Trailer
 
-# Notebook
+[CoStellation - TRAILER](https://youtu.be/-Ndb7TmDYDI)
+
+## Demo
+
+https://github.com/marionpobelle/Co-stellation/assets/112869026/5e6330e0-ac72-484d-9e4a-84509c38251d
+
 But the experience isn't limited to observation: the player also has a joystick that he can use to draw his own constellations! Placed in the tent, a notebook allows players to immortalize their creation in pencil, drawing and naming it, so that future players can find it in the starry sky.
 We left the game to run in one of the school's rooms on the Friday afternoon following the workshop. Here's the result and some of the drawings !
 
@@ -32,35 +44,7 @@ We left the game to run in one of the school's rooms on the Friday afternoon fol
 
 ![20231002_164621](https://github.com/marionpobelle/Co-stellation/assets/112869026/8434f1ad-53e7-45ae-9172-a5aeff8e8914)
 
-_______________________________________________________________________________________________________
-
-
-# Demo
-
-https://github.com/marionpobelle/Co-stellation/assets/112869026/5e6330e0-ac72-484d-9e4a-84509c38251d
-
-_______________________________________________________________________________________________________
-
-# Trailer
-
-[CoStellation - TRAILER](https://youtu.be/-Ndb7TmDYDI)
-
-_______________________________________________________________________________________________________
-
-# Bonus
-
-[CoStellation - MAKING OFF](https://youtu.be/uRq9EyqtHCM)
-_______________________________________________________________________________________________________
-
-# Development
-
-This game was made using [Unity](https://unity.com/fr).
-
-![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
-
-_______________________________________________________________________________________________________
-
-# Team
+## Team
 
 🎵 Sound : [Frédéric KUKOVICIC](https://itch.io/profile/fredkvc)
 
