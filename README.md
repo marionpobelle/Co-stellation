@@ -15,11 +15,11 @@ CoStellation was presented during the 2024 edition of the “Les Mycéliades” 
 
 This game was made using [Unity](https://unity.com/fr).
 
-![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
-
 Using a projector, a mirror, leds and scraps, we built a tent that immerses the player in the atmosphere of an evening watching the starry sky.
 
 ![Sans_sqd2](https://github.com/marionpobelle/Co-stellation/assets/112869026/ddded27f-414d-4a78-b9dd-e0d78011ae1d)
+
+![REF](https://github.com/marionpobelle/Co-stellation/assets/112869026/3c1181dc-dda9-4fe2-8c28-ad4632318a89)
 
 ## Trailer
 
