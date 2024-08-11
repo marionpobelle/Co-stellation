@@ -5,7 +5,7 @@
 
 Take a little break from your hectic day to gaze at the stars!
 
-CoStellation is the result of a 3 and a half day workshop whose objective was to create an interactive experience whose inputs would be basic (keyboard, mouse, joystick) but whose outputs would not be limited to a computer screen.
+CoStellation is the result of a 3 and a half day workshop with the objective to create an interactive experience with basic inputs (keyboard, mouse, joystick) but outputs would not be limited to a computer screen.
 
 CoStellation was presented during the 2024 edition of the “Les Mycéliades” festival held at the Alpha media-library in Angoulême.
 
