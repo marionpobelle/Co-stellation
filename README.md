@@ -24,10 +24,6 @@ Using a projector, a mirror, leds and scraps, we built a tent that immerses the 
 The experience isn't limited to observation: the player also has a joystick that they can use to draw their own constellations! Placed in the tent, a notebook allows players to draw and name their creation, so that future players can find it.
 We left the game to run in one of the school's rooms on the Friday afternoon following the workshop. Here's the result !
 
-![20231002_164755](https://github.com/marionpobelle/Co-stellation/assets/112869026/49a9c8b8-c521-4cfd-aa5f-32f7ae6cb70c)
-
-![Sans titre 4](https://github.com/marionpobelle/Co-stellation/assets/112869026/a1936f2e-a0fd-4ba2-ada9-e5bbbeb4bcc0)
-
 ![20230929_175142](https://github.com/marionpobelle/Co-stellation/assets/112869026/6e4f2835-16fb-41ac-88eb-9f5579ccbd51)
 
 ![20231002_164650](https://github.com/marionpobelle/Co-stellation/assets/112869026/20921a4c-765d-4945-bace-fe173906559c)
